@@ -818,56 +818,7 @@
     </section>
 
     <!-- ==================================================== -->
-    <!-- 7. DEDICATED PERSONAL LOVE LETTER SECTION            -->
-    <!-- ==================================================== -->
-    <section id="letter-section" class="scroll-mt-24 reveal-on-scroll">
-      <div class="max-w-3xl mx-auto parchment-card p-6 sm:p-12 md:p-14 rounded-3xl shadow-parchment relative overflow-hidden">
-        
-        <!-- Wax Seal Monogram Top Accent -->
-        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-gradient-to-tr from-wine-900 via-wine-700 to-roseGold-dark flex items-center justify-center text-3xl sm:text-4xl shadow-xl border-2 border-roseGold text-ivory-100">
-          💌
-        </div>
-
-        <div class="text-center mb-8">
-          <span class="inline-block px-4 py-1 rounded-full bg-roseGold/15 border border-roseGold/40 text-wine-900 text-xs sm:text-sm font-bold tracking-wider">
-            رسالة خاصة من القلب
-          </span>
-          <h2 class="font-serif text-2xl sm:text-4xl font-bold text-wine-950 mt-3">
-            إلى أجمل وأغلى إنسانة في حياتي 💖
-          </h2>
-        </div>
-
-        <!-- The Emotional Letter Content (100% Verbatim) -->
-        <div class="text-right space-y-5 font-serif text-base sm:text-xl text-wine-950 leading-loose">
-          <p class="font-bold text-lg sm:text-2xl text-wine-800 leading-relaxed">
-            كل سنة وإنتي طيبة يا أحلى وأغلى إنسانة في حياتي كلها..
-          </p>
-          <p>
-            حبيت أعملك حاجة بسيطة، بس معمولة مخصوص عشانك لوحدك، تفضل ذكرى حلوة بينا كل ما تفتحيها تفتكري إنتي غالية عندي إزاي.
-          </p>
-          <p>
-            من يوم ما دخلتي حياتي وإنتي غيرتي فيها حاجات كتير للأحسن، وجودك لوحده بيهون عليا أي يوم صعب، وكلامك وضحكتك هما الراحة اللي بدور عليها في آخر كل يوم.
-          </p>
-          <p>
-            في عيد ميلادك النهارده، بتمنالك سنة جديدة شبه قلبك الأبيض، مليانة فرحة ونجاح وراحة بال، وتحققي فيها كل حاجة بتتمنيها.. وبتمنى لنفسي إن كل سنينك الجاية نحتفل بيها وإحنا مع بعض.
-          </p>
-          <p class="font-bold text-lg sm:text-2xl text-wine-700 pt-3 border-t border-roseGold/30">
-            كل سنة وإنتي حبيبتي، وصحبتي، وأجمل حاجة حصلتلي.. بحبك أوي 💖
-          </p>
-        </div>
-
-        <!-- Ornate Ribbon Ending -->
-        <div class="mt-8 text-center text-roseGold-deep text-sm font-semibold tracking-widest flex items-center justify-center gap-2">
-          <span>—</span>
-          <span>دائماً وإلى الأبد ♾️</span>
-          <span>—</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================== -->
-    <!-- 8. INTERACTIVE BIRTHDAY CAKE & FLAME BLOWING         -->
+    <!-- 7. INTERACTIVE BIRTHDAY CAKE & FLAME BLOWING         -->
     <!-- ==================================================== -->
     <section id="cake-section" class="scroll-mt-24 text-center reveal-on-scroll">
       <div class="max-w-2xl mx-auto glass-wine rounded-3xl p-6 sm:p-12 shadow-2xl border border-roseGold/30 relative overflow-hidden">
@@ -882,7 +833,7 @@
           تورتة عيد ميلادك 🎂
         </h2>
         <p class="text-roseGold-light/80 text-xs sm:text-base font-medium mb-8 max-w-md mx-auto">
-          غمضي عينك، تمني أجمل أمنية لنفسك، واطفي الشمعة عشان نحتفل سوا 💖
+          غمضي عينك، تمني أجمل أمنية لنفسك، واطفي الشمعة عشان تفتحي رسالتك الخاصة 💖
         </p>
 
         <!-- Birthday Cake Graphics (Vector Artwork with Realistic Candle) -->
@@ -972,8 +923,71 @@
           </button>
         </div>
 
+        <!-- Relight Button (Visible after extinguishing) -->
+        <button id="relight-btn" onclick="relightCandle()" class="hidden px-5 py-2 rounded-full bg-wine-950/80 hover:bg-wine-900 text-roseGold text-xs sm:text-sm border border-roseGold/30 transition-all items-center gap-2 mt-4 mx-auto">
+          <span>ولّعي الشمعة من تاني 🕯️</span>
+        </button>
+
         <div id="mic-feedback" class="text-xs text-roseGold-light/75 mt-3 hidden">
           جاري الاستماع.. انفخي في المايك الآن 💨
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- 8. UNLOCKED IN-PAGE PERSONAL LOVE LETTER SECTION     -->
+    <!-- ==================================================== -->
+    <section id="letter-section" class="scroll-mt-24 transition-all duration-1000 hidden opacity-0 translate-y-8 pointer-events-none">
+      <div class="max-w-3xl mx-auto parchment-card p-6 sm:p-12 md:p-14 rounded-3xl shadow-parchment relative overflow-hidden">
+        
+        <!-- Wax Seal Monogram Top Accent -->
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-gradient-to-tr from-wine-900 via-wine-700 to-roseGold-dark flex items-center justify-center text-3xl sm:text-4xl shadow-xl border-2 border-roseGold text-ivory-100 animate-pulse">
+          💌
+        </div>
+
+        <div class="text-center mb-6">
+          <span class="inline-block px-4 py-1 rounded-full bg-roseGold/15 border border-roseGold/40 text-wine-900 text-xs sm:text-sm font-bold tracking-wider">
+            رسالة خاصة من القلب
+          </span>
+          <h2 class="font-serif text-2xl sm:text-4xl font-bold text-wine-950 mt-3">
+            إلى أجمل وأغلى إنسانة في حياتي 💖
+          </h2>
+
+          <!-- Typing Status & Controls -->
+          <div class="mt-4 flex items-center justify-center gap-3 flex-wrap">
+            <span id="letter-status-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-wine-900/10 border border-wine-900/20 text-wine-900 text-xs font-semibold">
+              <span id="letter-status-icon" class="animate-spin text-sm">✍️</span>
+              <span id="letter-status-text">جاري كتابة الرسالة لكِ بحب...</span>
+            </span>
+            <button id="skip-letter-btn" onclick="skipLetterTypewriter()" class="text-xs text-wine-800 hover:text-wine-950 font-bold underline px-2 py-1 rounded hover:bg-wine-900/10 transition-colors">
+              عرض الرسالة كاملة فوراً ⏩
+            </button>
+          </div>
+        </div>
+
+        <!-- The Emotional Letter Content Container (Typed Letter-by-Letter) -->
+        <div id="letter-typed-content" class="text-right space-y-5 font-serif text-base sm:text-xl text-wine-950 leading-loose min-h-[160px]">
+          <!-- Typed dynamically letter-by-letter by JS -->
+        </div>
+
+        <!-- Ornate Ribbon Ending (Revealed when typing completes) -->
+        <div id="letter-ending-ribbon" class="mt-8 text-center text-roseGold-deep text-sm font-semibold tracking-widest flex items-center justify-center gap-2 opacity-0 transition-opacity duration-700">
+          <span>—</span>
+          <span>دائماً وإلى الأبد ♾️</span>
+          <span>—</span>
+        </div>
+
+        <!-- Letter Footer Action Controls -->
+        <div id="letter-actions" class="mt-8 pt-6 border-t border-roseGold/30 flex items-center justify-center gap-3 flex-wrap opacity-0 transition-opacity duration-700">
+          <button onclick="replayLetterTypewriter()" class="px-4 py-2 rounded-full bg-wine-900/10 hover:bg-wine-900/20 text-wine-900 text-xs sm:text-sm font-bold border border-wine-900/30 transition-all inline-flex items-center gap-1.5">
+            <span>🔄</span>
+            <span>إعادة تشغيل الكتابة</span>
+          </button>
+          <button onclick="relightCandleAndScroll()" class="px-4 py-2 rounded-full bg-wine-900/10 hover:bg-wine-900/20 text-wine-900 text-xs sm:text-sm font-bold border border-wine-900/30 transition-all inline-flex items-center gap-1.5">
+            <span>🕯️</span>
+            <span>ولّعي الشمعة من تاني</span>
+          </button>
         </div>
 
       </div>
@@ -1398,8 +1412,14 @@
     const blowBtn = document.getElementById('blow-candle-btn');
 
     function blowCandle() {
+      const letterSec = document.getElementById('letter-section');
+      const relightBtn = document.getElementById('relight-btn');
+
       if (candleBlown) {
-        relightCandle();
+        // If already extinguished, smooth scroll down to the letter
+        if (letterSec) {
+          letterSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         return;
       }
       candleBlown = true;
@@ -1416,17 +1436,32 @@
       shootConfetti(160);
       setTimeout(() => shootConfetti(90), 400);
 
-      blowBtn.innerHTML = `<span>اتحققت الأمنية بإذن الله ✨</span><span>💖</span>`;
+      blowBtn.innerHTML = `<span>اتحققت الأمنية بإذن الله ✨ رسالتك بتتكتب تحت... 💌</span>`;
       blowBtn.classList.remove('from-wine-700', 'via-wine-600', 'to-roseGold-deep');
       blowBtn.classList.add('from-emerald-700', 'to-teal-800');
 
-      // Smooth scroll to Personal Letter
-      setTimeout(() => {
-        const letterEl = document.getElementById('letter-section');
-        if (letterEl) {
-          letterEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 1200);
+      // Show relight button
+      if (relightBtn) {
+        relightBtn.classList.remove('hidden');
+        relightBtn.classList.add('inline-flex');
+      }
+
+      // Reveal Letter Section with Smooth Animation
+      if (letterSec) {
+        letterSec.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          letterSec.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+          letterSec.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        });
+
+        // Smooth scroll to Personal Letter and start letter-by-letter typing
+        setTimeout(() => {
+          letterSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            startLetterTypewriter();
+          }, 600);
+        }, 850);
+      }
     }
 
     function relightCandle() {
@@ -1437,6 +1472,215 @@
       blowBtn.innerHTML = `<span>اطفي الشمعة واتمني أمنية ✨</span><span>💨</span>`;
       blowBtn.classList.remove('from-emerald-700', 'to-teal-800');
       blowBtn.classList.add('from-wine-700', 'via-wine-600', 'to-roseGold-deep');
+
+      const relightBtn = document.getElementById('relight-btn');
+      if (relightBtn) {
+        relightBtn.classList.add('hidden');
+        relightBtn.classList.remove('inline-flex');
+      }
+    }
+
+    function relightCandleAndScroll() {
+      relightCandle();
+      const cakeSec = document.getElementById('cake-section');
+      if (cakeSec) {
+        cakeSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function replayLetterTypewriter() {
+      startLetterTypewriter(true);
+      const letterSec = document.getElementById('letter-section');
+      if (letterSec) {
+        letterSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /* ===================================================
+       8. LETTER TYPEWRITER ENGINE (LETTER-BY-LETTER)
+       =================================================== */
+    const letterParagraphs = [
+      {
+        text: "كل سنة وإنتي طيبة يا أحلى وأغلى إنسانة في حياتي كلها..",
+        className: "font-bold text-lg sm:text-2xl text-wine-800 leading-relaxed mb-4"
+      },
+      {
+        text: "حبيت أعملك حاجة بسيطة، بس معمولة مخصوص عشانك لوحدك، تفضل ذكرى حلوة بينا كل ما تفتحيها تفتكري إنتي غالية عندي إزاي.",
+        className: "text-base sm:text-xl text-wine-950 leading-loose mb-4"
+      },
+      {
+        text: "من يوم ما دخلتي حياتي وإنتي غيرتي فيها حاجات كتير للأحسن، وجودك لوحده بيهون عليا أي يوم صعب، وكلامك وضحكتك هما الراحة اللي بدور عليها في آخر كل يوم.",
+        className: "text-base sm:text-xl text-wine-950 leading-loose mb-4"
+      },
+      {
+        text: "في عيد ميلادك النهارده، بتمنالك سنة جديدة شبه قلبك الأبيض، مليانة فرحة ونجاح وراحة بال، وتحققي فيها كل حاجة بتتمنيها.. وبتمنى لنفسي إن كل سنينك الجاية نحتفل بيها وإحنا مع بعض.",
+        className: "text-base sm:text-xl text-wine-950 leading-loose mb-4"
+      },
+      {
+        text: "كل سنة وإنتي حبيبتي، وصحبتي، وأجمل حاجة حصلتلي.. بحبك أوي 💖",
+        className: "font-bold text-lg sm:text-2xl text-wine-700 pt-3 border-t border-roseGold/30 leading-relaxed"
+      }
+    ];
+
+    let letterTypewriterTimer = null;
+    let currentParaIdx = 0;
+    let currentCharIdx = 0;
+    let isLetterTyping = false;
+    let letterTypingCompleted = false;
+
+    function getOrCreateQuillCursor() {
+      let cursor = document.getElementById('typewriter-quill');
+      if (!cursor) {
+        cursor = document.createElement('span');
+        cursor.id = 'typewriter-quill';
+        cursor.className = 'inline-block text-wine-700 animate-pulse font-normal mr-1 select-none text-base';
+        cursor.textContent = '✍️';
+      }
+      return cursor;
+    }
+
+    function startLetterTypewriter(forceRestart = false) {
+      if (isLetterTyping && !forceRestart) return;
+
+      if (letterTypewriterTimer) {
+        clearTimeout(letterTypewriterTimer);
+        letterTypewriterTimer = null;
+      }
+
+      isLetterTyping = true;
+      letterTypingCompleted = false;
+      currentParaIdx = 0;
+      currentCharIdx = 0;
+
+      const container = document.getElementById('letter-typed-content');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const ribbon = document.getElementById('letter-ending-ribbon');
+      if (ribbon) ribbon.classList.add('opacity-0');
+
+      const actions = document.getElementById('letter-actions');
+      if (actions) actions.classList.add('opacity-0');
+
+      const statusBadge = document.getElementById('letter-status-badge');
+      const statusText = document.getElementById('letter-status-text');
+      const statusIcon = document.getElementById('letter-status-icon');
+      if (statusBadge) statusBadge.classList.remove('hidden');
+      if (statusText) statusText.textContent = "جاري كتابة الرسالة لكِ بحب...";
+      if (statusIcon) {
+        statusIcon.textContent = "✍️";
+        statusIcon.className = "animate-spin text-sm";
+      }
+
+      const skipBtn = document.getElementById('skip-letter-btn');
+      if (skipBtn) skipBtn.classList.remove('hidden');
+
+      typeLetterStep();
+    }
+
+    function typeLetterStep() {
+      if (!isLetterTyping) return;
+
+      if (currentParaIdx >= letterParagraphs.length) {
+        finishLetterTypewriter();
+        return;
+      }
+
+      const container = document.getElementById('letter-typed-content');
+      const paraData = letterParagraphs[currentParaIdx];
+      const charArray = Array.from(paraData.text);
+
+      let currentP = document.getElementById(`letter-para-${currentParaIdx}`);
+      if (!currentP) {
+        currentP = document.createElement('p');
+        currentP.id = `letter-para-${currentParaIdx}`;
+        currentP.className = paraData.className;
+        container.appendChild(currentP);
+      }
+
+      const cursor = getOrCreateQuillCursor();
+
+      if (currentCharIdx < charArray.length) {
+        currentCharIdx++;
+        currentP.textContent = charArray.slice(0, currentCharIdx).join('');
+        currentP.appendChild(cursor);
+
+        // Gentle auto-scroll if typing nears screen edge
+        const rect = currentP.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight - 80) {
+          currentP.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        const nextChar = charArray[currentCharIdx - 1];
+        let delay = 36; // balanced moderate speed
+        if (nextChar === ' ') {
+          delay = 24;
+        } else if (nextChar === '،' || nextChar === '.' || nextChar === '!' || nextChar === '؟') {
+          delay = 180;
+        }
+
+        letterTypewriterTimer = setTimeout(typeLetterStep, delay);
+      } else {
+        // Finished current paragraph, pause briefly before next paragraph
+        currentParaIdx++;
+        currentCharIdx = 0;
+        letterTypewriterTimer = setTimeout(typeLetterStep, 300);
+      }
+    }
+
+    function finishLetterTypewriter() {
+      isLetterTyping = false;
+      letterTypingCompleted = true;
+
+      if (letterTypewriterTimer) {
+        clearTimeout(letterTypewriterTimer);
+        letterTypewriterTimer = null;
+      }
+
+      const cursor = document.getElementById('typewriter-quill');
+      if (cursor) cursor.remove();
+
+      const statusText = document.getElementById('letter-status-text');
+      const statusIcon = document.getElementById('letter-status-icon');
+      if (statusText) statusText.textContent = "تمت كتابة الرسالة بكل حب 💖";
+      if (statusIcon) {
+        statusIcon.textContent = "💌";
+        statusIcon.className = "text-sm";
+      }
+
+      const skipBtn = document.getElementById('skip-letter-btn');
+      if (skipBtn) skipBtn.classList.add('hidden');
+
+      const ribbon = document.getElementById('letter-ending-ribbon');
+      if (ribbon) ribbon.classList.remove('opacity-0');
+
+      const actions = document.getElementById('letter-actions');
+      if (actions) actions.classList.remove('opacity-0');
+
+      shootConfetti(100);
+    }
+
+    function skipLetterTypewriter() {
+      if (letterTypewriterTimer) {
+        clearTimeout(letterTypewriterTimer);
+        letterTypewriterTimer = null;
+      }
+      isLetterTyping = false;
+      letterTypingCompleted = true;
+
+      const container = document.getElementById('letter-typed-content');
+      if (!container) return;
+      container.innerHTML = '';
+
+      letterParagraphs.forEach((para, idx) => {
+        const p = document.createElement('p');
+        p.id = `letter-para-${idx}`;
+        p.className = para.className;
+        p.textContent = para.text;
+        container.appendChild(p);
+      });
+
+      finishLetterTypewriter();
     }
 
     /* ===================================================
