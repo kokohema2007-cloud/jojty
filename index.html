@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>عيد ميلاد سعيد يا أحلى ما في حياتي 🎂💖 | 29/11</title>
-  <meta name="description" content="موقع مفاجأة عيد ميلاد رومانسي ومميز ليوم 29 نوفمبر">
-  <meta name="theme-color" content="#fbcfe8">
+  <title>عيد ميلاد سعيد يا نبض قلبي 🎂💖 | 29/11</title>
+  <meta name="description" content="موقع رومانسي سينمائي فاخر صُنع بحب من أجل جوجو بمناسبة يوم ميلادها 29 نوفمبر">
+  <meta name="theme-color" content="#1a040d">
 
-  <!-- Google Fonts: Cairo & Amiri -->
+  <!-- Google Fonts: Cairo, Amiri & Playfair Display -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,19 +21,39 @@
           fontFamily: {
             sans: ['Cairo', 'sans-serif'],
             serif: ['Amiri', 'serif'],
+            display: ['Playfair Display', 'serif'],
           },
           colors: {
-            roseGold: '#ec4899',
-            deepRose: '#db2777',
-            darkPink: '#be185d',
-            softPink: '#fbcfe8',
-            blush: '#ffe4e6',
+            cherry: '#0f0207',
+            wine: {
+              950: '#14020a',
+              900: '#1f040f',
+              850: '#2a0615',
+              800: '#38091d',
+              700: '#4e0c29',
+              600: '#6b1137',
+              500: '#8c1648',
+            },
+            roseGold: {
+              light: '#f5d3c3',
+              DEFAULT: '#e0a384',
+              dark: '#be7b5a',
+              deep: '#9c5938',
+            },
+            ivory: {
+              50: '#fffdfa',
+              100: '#faf6ee',
+              200: '#f4ede0',
+              300: '#ede2cf',
+              400: '#ded0b8',
+            },
+            softPink: '#fda4af',
           },
           boxShadow: {
-            'glass': '0 8px 32px 0 rgba(236, 72, 153, 0.15)',
-            'glass-hover': '0 16px 40px 0 rgba(236, 72, 153, 0.25)',
-            'glow': '0 0 25px rgba(236, 72, 153, 0.5)',
-            'candle': '0 0 20px 8px rgba(251, 191, 36, 0.6)',
+            'glow-gold': '0 0 30px rgba(224, 163, 132, 0.35)',
+            'glow-wine': '0 0 35px rgba(107, 17, 55, 0.45)',
+            'candle': '0 0 25px 8px rgba(245, 158, 11, 0.7)',
+            'parchment': '0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(224, 163, 132, 0.25)',
           }
         }
       }
@@ -44,7 +64,16 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* Reset & Viewport Constraints */
+    /* ===================================================
+       GLOBAL STYLING & CINEMATIC PALETTE
+       =================================================== */
+    :root {
+      --color-bg-deep: #0f0207;
+      --color-wine: #38091d;
+      --color-rose-gold: #e0a384;
+      --color-ivory: #faf6ee;
+    }
+
     html, body {
       overflow-x: hidden;
       width: 100%;
@@ -53,33 +82,91 @@
       touch-action: manipulation;
     }
 
-    /* Custom Background & Typography */
     body {
-      background: linear-gradient(135deg, #ffe4e6 0%, #fbcfe8 50%, #fce7f3 100%);
+      background: radial-gradient(ellipse at 50% 0%, #2f0618 0%, #17030c 45%, #0a0105 100%);
       background-attachment: fixed;
       min-height: 100vh;
       min-height: 100dvh;
-      color: #831843;
+      color: #faf6ee;
       font-family: 'Cairo', sans-serif;
     }
 
-    /* Custom Glassmorphism */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 10px 30px -5px rgba(236, 72, 153, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    /* Ambient Lighting Spots */
+    .ambient-glow {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 1;
+      opacity: 0.22;
+      transition: opacity 1s ease;
     }
 
-    .glass-card-deep {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(251, 207, 232, 0.8);
+    /* Luxury Dark Wine Glassmorphism */
+    .glass-wine {
+      background: rgba(30, 4, 14, 0.68);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(224, 163, 132, 0.22);
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    /* 3D Flip Card Setup with Hardware Acceleration for Mobile & Tablets */
+    .glass-wine-hover {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-wine-hover:hover {
+      border-color: rgba(224, 163, 132, 0.45);
+      box-shadow: 0 25px 50px -10px rgba(140, 22, 72, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Antique Warm Parchment Paper Card */
+    .parchment-card {
+      background: linear-gradient(145deg, #fffcf7 0%, #f7f0e3 50%, #f0e6d4 100%);
+      color: #2b0816;
+      border: 1px solid rgba(224, 163, 132, 0.5);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(190, 123, 90, 0.3);
+      position: relative;
+    }
+    .parchment-card::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(190, 123, 90, 0.35);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    /* Polaroid Picture Styling */
+    .polaroid-frame {
+      background: #faf6ee;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform;
+    }
+    .polaroid-frame:hover {
+      transform: scale(1.035) rotate(0deg) !important;
+      z-index: 25;
+      box-shadow: 0 30px 60px -10px rgba(224, 163, 132, 0.3), 0 0 0 1px rgba(224, 163, 132, 0.4);
+    }
+
+    /* Metallic Rose Gold Washi Tape */
+    .rose-gold-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85px;
+      height: 22px;
+      background: linear-gradient(135deg, rgba(245, 211, 195, 0.85) 0%, rgba(224, 163, 132, 0.9) 50%, rgba(190, 123, 90, 0.85) 100%);
+      border-left: 2px dashed rgba(156, 89, 56, 0.5);
+      border-right: 2px dashed rgba(156, 89, 56, 0.5);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+    }
+
+    /* 3D Flip Card Hardware Acceleration */
     .perspective-1000 {
       perspective: 1000px;
       -webkit-perspective: 1000px;
@@ -88,7 +175,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       cursor: pointer;
@@ -113,251 +200,296 @@
       -webkit-transform: rotateY(180deg) translateZ(0);
     }
 
-    /* Typewriter Cursor */
-    .typewriter-cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1.2em;
-      background-color: #db2777;
-      margin-right: 4px;
-      vertical-align: middle;
-      animation: blink 0.8s infinite;
+    /* Realistic Candle Flame with Flickering Halo */
+    .candle-flame-wrapper {
+      position: relative;
+      width: 20px;
+      height: 38px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
     }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    .flame-halo {
+      position: absolute;
+      bottom: 2px;
+      width: 38px;
+      height: 48px;
+      background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.45) 0%, rgba(239, 68, 68, 0.15) 50%, transparent 80%);
+      border-radius: 50%;
+      animation: flameGlow 1.8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .candle-flame-body {
+      width: 16px;
+      height: 32px;
+      background: linear-gradient(to bottom, #ffffff 0%, #fffbeb 20%, #fef08a 40%, #f97316 75%, #dc2626 100%);
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      animation: flameWiggle 1.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.95)) drop-shadow(0 0 16px rgba(234, 88, 12, 0.7));
+      transform-origin: center bottom;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Candle Flame Animation */
-    .flame {
-      width: 16px;
-      height: 30px;
-      background: linear-gradient(to bottom, #fff7ed 0%, #fef08a 25%, #f97316 75%, #ef4444 100%);
-      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
-      animation: flicker 1.6s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.9)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.7));
-      transform-origin: center bottom;
-      transition: all 0.5s ease-out;
+    @keyframes flameWiggle {
+      0% { transform: scale(1) rotate(-1.5deg); }
+      25% { transform: scale(1.04, 0.96) rotate(1.5deg); }
+      50% { transform: scale(0.96, 1.04) rotate(-1deg); }
+      75% { transform: scale(1.02, 0.98) rotate(2deg); }
+      100% { transform: scale(1.05, 0.94) rotate(-0.5deg); }
     }
-    @keyframes flicker {
-      0% { transform: scale(1) rotate(-2deg); }
-      20% { transform: scale(1.05, 0.95) rotate(2deg); }
-      40% { transform: scale(0.95, 1.05) rotate(-1deg); }
-      60% { transform: scale(1.03, 0.97) rotate(2deg); }
-      80% { transform: scale(0.98, 1.02) rotate(-2deg); }
-      100% { transform: scale(1.08, 0.92) rotate(1deg); }
+    @keyframes flameGlow {
+      0% { opacity: 0.6; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1.15); }
     }
 
     .flame-extinguished {
       opacity: 0 !important;
-      transform: scale(0.1) translateY(-10px) !important;
-      filter: blur(4px) !important;
+      transform: scale(0.1) translateY(-14px) !important;
+      filter: blur(5px) !important;
     }
 
-    /* Smoke Animation */
-    .smoke {
+    /* Smoke Puff after candle extinguishes */
+    .candle-smoke-puff {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: rgba(156, 163, 175, 0.5);
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, rgba(220, 220, 220, 0.65) 0%, rgba(150, 150, 150, 0.3) 70%, transparent 100%);
       border-radius: 50%;
-      bottom: 25px;
-      left: calc(50% - 4px);
+      bottom: 24px;
+      left: calc(50% - 5px);
       opacity: 0;
       pointer-events: none;
     }
-    .smoke-puff {
-      animation: puff 1.4s ease-out forwards;
+    .smoke-active {
+      animation: smokeRise 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
     }
-    @keyframes puff {
-      0% { opacity: 0.8; transform: translateY(0) scale(1); filter: blur(1px); }
-      50% { opacity: 0.5; transform: translateY(-25px) scale(2.5) translateX(6px); filter: blur(3px); }
-      100% { opacity: 0; transform: translateY(-50px) scale(4) translateX(-8px); filter: blur(5px); }
-    }
-
-    /* Polaroid Styles */
-    .polaroid-card {
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      will-change: transform;
-    }
-    .polaroid-card:hover, .polaroid-card:focus-within {
-      transform: scale(1.06) rotate(0deg) !important;
-      z-index: 25;
-      box-shadow: 0 25px 35px -5px rgba(219, 39, 119, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    @keyframes smokeRise {
+      0% { opacity: 0.9; transform: translateY(0) scale(1); filter: blur(1px); }
+      40% { opacity: 0.6; transform: translateY(-30px) scale(3) translateX(8px); filter: blur(3px); }
+      100% { opacity: 0; transform: translateY(-70px) scale(5.5) translateX(-12px); filter: blur(6px); }
     }
 
-    /* Washi Tape Accent */
-    .washi-tape {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 24px;
-      background: rgba(251, 207, 232, 0.8);
-      border-left: 2px dashed rgba(244, 114, 182, 0.5);
-      border-right: 2px dashed rgba(244, 114, 182, 0.5);
-      backdrop-filter: blur(2px);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      z-index: 5;
+    /* Glowing Typewriter Cursor */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.25em;
+      background: #e0a384;
+      margin-right: 4px;
+      vertical-align: middle;
+      box-shadow: 0 0 10px #e0a384;
+      animation: blinkCursor 0.9s infinite;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
-    /* Music Visualizer Bars */
+    /* Music Visualizer Bars in Rose Gold */
     .music-bar {
       width: 3px;
-      background: #db2777;
+      background: linear-gradient(to top, #be7b5a, #e0a384);
       border-radius: 2px;
       animation: soundBars 1s ease-in-out infinite alternate;
     }
-    .music-bar:nth-child(1) { height: 14px; animation-delay: 0.1s; }
-    .music-bar:nth-child(2) { height: 20px; animation-delay: 0.3s; }
-    .music-bar:nth-child(3) { height: 10px; animation-delay: 0.5s; }
-    .music-bar:nth-child(4) { height: 17px; animation-delay: 0.2s; }
+    .music-bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
+    .music-bar:nth-child(2) { height: 18px; animation-delay: 0.35s; }
+    .music-bar:nth-child(3) { height: 9px; animation-delay: 0.5s; }
+    .music-bar:nth-child(4) { height: 15px; animation-delay: 0.2s; }
 
     @keyframes soundBars {
       0% { height: 4px; }
-      100% { height: 18px; }
+      100% { height: 19px; }
     }
     .paused .music-bar {
       animation: none !important;
       height: 4px !important;
     }
 
-    /* Smooth Pulse Animation */
-    @keyframes pulseHeart {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
+    /* Scroll Reveal Transition */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
     }
-    .pulse-heart {
-      animation: pulseHeart 1.5s ease-in-out infinite;
+    .reveal-on-scroll.revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Custom Scrollbar */
+    /* Reduced Motion Preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* Custom Luxury Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #ffe4e6;
+      background: #14020a;
     }
     ::-webkit-scrollbar-thumb {
-      background: #f472b6;
+      background: #4e0c29;
       border-radius: 4px;
+      border: 1px solid rgba(224, 163, 132, 0.2);
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #db2777;
+      background: #e0a384;
     }
   </style>
 </head>
-<body class="relative min-h-screen text-slate-800 antialiased selection:bg-pink-300 selection:text-pink-900">
+<body class="relative min-h-screen text-ivory-100 antialiased selection:bg-wine-600 selection:text-ivory-100">
 
-  <!-- Background Canvas for Floating Hearts & Sparkles -->
+  <!-- Ambient Cinematic Background Lighting -->
+  <div class="ambient-glow top-0 right-1/4 w-96 h-96 bg-wine-600/30"></div>
+  <div class="ambient-glow top-1/3 left-10 w-[30rem] h-[30rem] bg-roseGold-dark/15"></div>
+  <div class="ambient-glow bottom-1/4 right-10 w-[32rem] h-[32rem] bg-wine-500/20"></div>
+
+  <!-- Background Canvas for Floating Rose Petals & Golden Embers -->
   <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
 
-  <!-- Background Music Audio Element -->
+  <!-- Background Music Audio Element (Starts at 28s) -->
   <audio id="bg-music" src="./song.mp3" loop preload="auto"></audio>
 
   <!-- ==================================================== -->
-  <!-- 1. ENTRANCE LOCK SCREEN OVERLAY                      -->
+  <!-- 1. CINEMATIC ENTRANCE SCREEN (IMMERSIVE GATEWAY)     -->
   <!-- ==================================================== -->
-  <div id="lock-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-[#ffe4e6] via-[#fbcfe8] to-[#fce7f3] transition-all duration-1000 overscroll-contain">
-    <div class="relative max-w-md w-full glass-card p-6 sm:p-10 rounded-3xl text-center shadow-glass border border-white/90 max-h-[92vh] overflow-y-auto">
+  <div id="lock-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-[#1c030f] via-[#12020a] to-[#080104] transition-all duration-1000 overscroll-contain">
+    
+    <!-- Decorative Glowing Aura -->
+    <div class="absolute w-[28rem] h-[28rem] rounded-full bg-wine-600/20 blur-[100px] pointer-events-none"></div>
+
+    <div class="relative max-w-lg w-full glass-wine p-6 sm:p-10 rounded-3xl text-center shadow-2xl border border-roseGold/30 max-h-[94vh] overflow-y-auto">
       
-      <!-- Romantic Animated Icon -->
-      <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 flex items-center justify-center">
-        <div class="absolute inset-0 rounded-full bg-pink-400/20 animate-ping"></div>
-        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-500/30 text-3xl sm:text-4xl">
-          🎁
+      <!-- Ornate Seal Monogram -->
+      <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border border-roseGold/40 animate-ping opacity-35" style="animation-duration: 3s;"></div>
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-wine-800 via-wine-600 to-roseGold-dark flex items-center justify-center shadow-xl shadow-wine-950 border-2 border-roseGold text-3xl sm:text-4xl text-roseGold-light">
+          💌
         </div>
       </div>
 
-      <!-- Badge & Welcome Text -->
-      <div class="inline-block px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white/80 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
-        ✨ مفاجأة خاصة جداً من القلب ✨
+      <!-- Luxury Badge & Teaser Text -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-wine-950/80 border border-roseGold/30 text-roseGold text-xs sm:text-sm font-semibold mb-3 shadow-inner">
+        <span class="text-roseGold animate-pulse">✨</span>
+        <span>مفاجأة خاصة جداً من أعماق القلب</span>
+        <span class="text-roseGold animate-pulse">✨</span>
       </div>
-      <h2 class="font-serif text-2xl sm:text-4xl font-bold text-pink-900 mb-2 leading-tight">
+
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold text-ivory-100 mb-3 leading-tight tracking-wide">
         أهلاً بجميلة قلبي 💖
-      </h2>
-      <p class="text-pink-800/80 text-xs sm:text-base mb-6 sm:mb-8 leading-relaxed font-medium">
+      </h1>
+
+      <p class="text-ivory-300/85 text-xs sm:text-base mb-8 leading-relaxed font-medium max-w-sm mx-auto">
         كل ثانية، وكل كلمة، وكل ذكرى هنا اتعملت بكل حب عشانك إنتي وبس..
       </p>
 
-      <!-- Glowing Entrance Button -->
-      <button id="enter-btn" class="w-full relative group px-5 py-3.5 sm:px-6 sm:py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-base sm:text-xl shadow-xl shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 min-h-[50px]">
-        <span>اضغطي هنا لفتح مفاجأتك 🎁</span>
-        <span class="inline-block transition-transform duration-300 group-hover:scale-125">✨</span>
+      <!-- Glowing CTA Button -->
+      <button id="enter-btn" class="w-full relative group px-6 py-4 rounded-2xl bg-gradient-to-r from-wine-700 via-wine-600 to-roseGold-deep text-ivory-100 font-bold text-base sm:text-xl shadow-xl shadow-wine-950/80 hover:shadow-glow-gold hover:scale-[1.02] active:scale-[0.98] transition-all duration-400 flex items-center justify-center gap-3 border border-roseGold/50 min-h-[54px]" aria-label="اضغطي هنا لفتح مفاجأتك">
+        <span class="relative z-10 font-bold tracking-wide">اضغطي هنا لفتح مفاجأتك 🎁</span>
+        <span class="relative z-10 text-xl transition-transform duration-300 group-hover:scale-125">✨</span>
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-roseGold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </button>
 
-      <p class="text-[11px] sm:text-xs text-pink-500/80 mt-3 sm:mt-4">
-        (تأكدي من تشغيل الصوت عشان تعيشي اللحظة 🎵)
+      <p class="text-[11px] sm:text-xs text-roseGold/70 mt-4 flex items-center justify-center gap-1.5 font-medium">
+        <span>🎵</span>
+        <span>تأكدي من تشغيل الصوت لتبدأ موسيقانا مع اللحظة</span>
       </p>
     </div>
   </div>
 
   <!-- ==================================================== -->
-  <!-- 2. FLOATING MUSIC PLAYER (Corner Widget)              -->
+  <!-- 2. FLOATING CINEMATIC MUSIC CONTROL DOCK             -->
   <!-- ==================================================== -->
-  <div id="music-player-widget" class="fixed z-40 max-w-[calc(100vw-2rem)]" style="bottom: max(1rem, env(safe-area-inset-bottom, 1rem)); left: max(1rem, env(safe-area-inset-left, 1rem));">
-    <button id="music-toggle-btn" class="glass-card-deep px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-lg shadow-pink-500/10 border border-pink-200/90 flex items-center gap-2.5 sm:gap-3 hover:scale-105 active:scale-95 transition-all duration-300 group select-none">
+  <div id="music-player-widget" class="fixed z-40 max-w-[calc(100vw-2rem)] select-none" style="bottom: max(1.2rem, env(safe-area-inset-bottom, 1.2rem)); left: max(1.2rem, env(safe-area-inset-left, 1.2rem));" role="region" aria-label="مشغل الموسيقى">
+    <div class="glass-wine px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-2xl border border-roseGold/30 flex items-center gap-3">
       
-      <!-- Pulsing Heart Icon -->
-      <div id="player-heart" class="text-lg sm:text-xl text-rose-500 pulse-heart transition-transform">
-        💖
-      </div>
-
-      <!-- Song Label & Artist -->
-      <div class="text-right">
-        <div class="text-[11px] sm:text-xs font-bold text-pink-900 flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
-          <span>🎵 Adele - Lovesong</span>
+      <!-- Play/Pause Button with Pulsing Heart -->
+      <button id="music-toggle-btn" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-roseGold/60 rounded-full" aria-label="تشغيل أو إيقاف الموسيقى">
+        <div id="player-heart" class="text-lg sm:text-xl text-roseGold transition-transform duration-300 group-hover:scale-125">
+          💖
         </div>
-        <div id="music-status-text" class="text-[9px] sm:text-[10px] text-pink-600 font-medium">
-          يعمل الآن 🎶
+        <div class="text-right">
+          <div class="text-[11px] sm:text-xs font-bold text-ivory-100 flex items-center gap-1.5 whitespace-nowrap">
+            <span>🎵 Adele - Lovesong</span>
+          </div>
+          <div id="music-status-text" class="text-[9px] sm:text-[10px] text-roseGold font-medium">
+            يعمل الآن 🎶
+          </div>
         </div>
-      </div>
+      </button>
 
       <!-- Equalizer Bars -->
-      <div id="music-equalizer" class="flex items-end gap-0.5 sm:gap-1 h-4 sm:h-5 px-0.5 sm:px-1">
+      <div id="music-equalizer" class="flex items-end gap-0.5 sm:gap-1 h-4 sm:h-5 px-1 border-r border-roseGold/20 pr-2">
         <span class="music-bar"></span>
         <span class="music-bar"></span>
         <span class="music-bar"></span>
         <span class="music-bar"></span>
       </div>
-    </button>
+
+      <!-- Volume & Mute Control -->
+      <div class="flex items-center gap-1.5 pr-1 border-r border-roseGold/20">
+        <button id="mute-toggle-btn" class="text-roseGold hover:text-ivory-100 transition-colors p-1 text-sm focus:outline-none" aria-label="كتم أو تشغيل الصوت" title="كتم / تشغيل">
+          <span id="volume-icon">🔊</span>
+        </button>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.05" value="0.8" class="w-12 sm:w-16 h-1 bg-wine-800 rounded-lg appearance-none cursor-pointer accent-[#e0a384]" aria-label="مستوى الصوت" title="التحكم في الصوت">
+      </div>
+
+    </div>
   </div>
 
-  <!-- MAIN WRAPPER -->
-  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-20 sm:space-y-32">
+  <!-- ==================================================== -->
+  <!-- MAIN EXPERIENCE WRAPPER                              -->
+  <!-- ==================================================== -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-24 sm:space-y-36">
 
     <!-- ==================================================== -->
     <!-- 3. HERO SECTION                                      -->
     <!-- ==================================================== -->
-    <header class="text-center pt-4 sm:pt-16 pb-4 sm:pb-6">
+    <header class="text-center pt-6 sm:pt-16 pb-4 sm:pb-8 reveal-on-scroll">
       
-      <!-- Romantic Date Badge -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full glass-card border border-pink-200 shadow-sm text-pink-700 text-xs sm:text-base font-semibold mb-4 sm:mb-6 hover:scale-105 transition-transform duration-300">
-        <span class="animate-spin text-pink-500" style="animation-duration: 4s;">✨</span>
-        <span>29 / 11 — يوم مميز في حياتي ✨</span>
+      <!-- Romantic Date Shimmer Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 sm:px-6 sm:py-2 rounded-full glass-wine border border-roseGold/40 shadow-glow-gold text-roseGold text-xs sm:text-base font-semibold mb-6 hover:scale-105 transition-transform duration-300">
+        <span class="animate-spin text-roseGold" style="animation-duration: 5s;">✨</span>
+        <span class="font-display tracking-widest">29 / 11</span>
+        <span>—</span>
+        <span>يوم مميز في حياتي</span>
+        <span>✨</span>
       </div>
 
-      <!-- Glowing Main Title -->
-      <h1 class="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-pink-700 drop-shadow-sm mb-4 sm:mb-6 leading-tight tracking-wide px-2">
+      <!-- Majestic Glowing Title -->
+      <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-ivory-50 via-roseGold-light to-roseGold drop-shadow-md mb-6 leading-tight tracking-wide px-2">
         كل سنة وأنتِ أجمل حاجة في حياتي 🎂💖
       </h1>
 
       <!-- Typewriter Subtitle Card -->
-      <div class="max-w-2xl mx-auto glass-card px-4 py-3 sm:px-6 sm:py-5 rounded-2xl shadow-glass border border-white/80 min-h-[4.5rem] sm:min-h-[4.2rem] flex items-center justify-center">
-        <p class="text-sm sm:text-lg md:text-xl text-pink-900 font-semibold leading-relaxed">
+      <div class="max-w-2xl mx-auto glass-wine px-5 py-4 sm:px-8 sm:py-5 rounded-2xl shadow-xl border border-roseGold/25 min-h-[5rem] sm:min-h-[4.5rem] flex items-center justify-center">
+        <p class="text-sm sm:text-lg md:text-xl text-ivory-200 font-semibold leading-relaxed">
           <span id="typewriter-text"></span>
           <span class="typewriter-cursor"></span>
         </p>
       </div>
 
-      <!-- Scroll Down Cute Indicator -->
-      <div class="mt-8 sm:mt-12 flex justify-center">
-        <a href="#timer-section" class="inline-flex flex-col items-center text-pink-600 hover:text-pink-800 transition-colors duration-300 text-xs sm:text-sm font-medium">
-          <span>اكتشفي الباقي تحت</span>
-          <svg class="w-4 h-4 sm:w-5 sm:h-5 animate-bounce mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
+      <!-- Scroll Indicator -->
+      <div class="mt-12 flex justify-center">
+        <a href="#timer-section" class="inline-flex flex-col items-center text-roseGold/80 hover:text-roseGold transition-colors duration-300 text-xs sm:text-sm font-medium gap-1.5 group">
+          <span class="tracking-wider">اكتشفي الباقي تحت</span>
+          <div class="w-8 h-8 rounded-full border border-roseGold/40 flex items-center justify-center group-hover:border-roseGold transition-colors">
+            <svg class="w-4 h-4 animate-bounce text-roseGold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
         </a>
       </div>
     </header>
@@ -365,16 +497,16 @@
     <!-- ==================================================== -->
     <!-- 4. 29/11 INTERACTIVE TIMER SECTION                   -->
     <!-- ==================================================== -->
-    <section id="timer-section" class="scroll-mt-24">
-      <div class="max-w-3xl mx-auto glass-card rounded-3xl p-4 sm:p-8 md:p-10 shadow-glass border border-white/90">
+    <section id="timer-section" class="scroll-mt-24 reveal-on-scroll">
+      <div class="max-w-3xl mx-auto glass-wine rounded-3xl p-5 sm:p-10 shadow-2xl border border-roseGold/30">
         
         <!-- Toggle Switch Tabs -->
         <div class="flex justify-center mb-6 sm:mb-8">
-          <div class="inline-flex p-1 sm:p-1.5 rounded-2xl bg-pink-100/80 border border-pink-200/90 shadow-inner max-w-full">
-            <button id="tab-countdown" class="px-2.5 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm" onclick="switchTimerTab('countdown')">
+          <div class="inline-flex p-1 sm:p-1.5 rounded-2xl bg-wine-950/80 border border-roseGold/30 shadow-inner max-w-full">
+            <button id="tab-countdown" class="px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-gradient-to-r from-roseGold to-roseGold-dark text-wine-950 shadow-md" onclick="switchTimerTab('countdown')">
               العد التنازلي ليوم 29/11 🎂⏳
             </button>
-            <button id="tab-anniversary" class="px-2.5 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800" onclick="switchTimerTab('anniversary')">
+            <button id="tab-anniversary" class="px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-roseGold hover:text-ivory-100" onclick="switchTimerTab('anniversary')">
               بقالنا قد إيه سوا ♾️💖
             </button>
           </div>
@@ -382,45 +514,45 @@
 
         <!-- Section Title & Subheading -->
         <div class="text-center mb-6 sm:mb-8">
-          <h2 id="timer-heading" class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-pink-900 mb-2">
+          <h2 id="timer-heading" class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ivory-100 mb-2">
             العد التنازلي ليوم ميلادك السعيد 🎉
           </h2>
-          <p id="timer-subtext" class="text-xs sm:text-sm md:text-base text-pink-700/80 font-medium px-2">
+          <p id="timer-subtext" class="text-xs sm:text-sm md:text-base text-roseGold-light/80 font-medium px-2">
             كل ثانية بتقربنا لليوم اللي اتولدت فيه روحي ونور حياتي ✨
           </p>
         </div>
 
         <!-- Timer Display Boxes (4 Units) -->
-        <div id="timer-grid" class="grid grid-cols-4 gap-1.5 sm:gap-3 md:gap-4 max-w-xl mx-auto">
+        <div id="timer-grid" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto">
           
           <!-- Days Box -->
-          <div class="glass-card-deep rounded-2xl p-2 sm:p-4 md:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
-            <span id="timer-days" class="font-bold text-lg sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
-            <span class="text-[10px] sm:text-xs md:text-sm font-semibold text-pink-800 mt-1">يوم</span>
+          <div class="glass-wine rounded-2xl p-2.5 sm:p-5 text-center border border-roseGold/25 shadow-lg flex flex-col justify-center">
+            <span id="timer-days" class="font-bold text-xl sm:text-3xl md:text-5xl text-roseGold font-sans tracking-tight drop-shadow-sm">00</span>
+            <span class="text-[11px] sm:text-xs md:text-sm font-semibold text-ivory-300 mt-1">يوم</span>
           </div>
 
           <!-- Hours Box -->
-          <div class="glass-card-deep rounded-2xl p-2 sm:p-4 md:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
-            <span id="timer-hours" class="font-bold text-lg sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
-            <span class="text-[10px] sm:text-xs md:text-sm font-semibold text-pink-800 mt-1">ساعة</span>
+          <div class="glass-wine rounded-2xl p-2.5 sm:p-5 text-center border border-roseGold/25 shadow-lg flex flex-col justify-center">
+            <span id="timer-hours" class="font-bold text-xl sm:text-3xl md:text-5xl text-roseGold font-sans tracking-tight drop-shadow-sm">00</span>
+            <span class="text-[11px] sm:text-xs md:text-sm font-semibold text-ivory-300 mt-1">ساعة</span>
           </div>
 
           <!-- Minutes Box -->
-          <div class="glass-card-deep rounded-2xl p-2 sm:p-4 md:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
-            <span id="timer-minutes" class="font-bold text-lg sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
-            <span class="text-[10px] sm:text-xs md:text-sm font-semibold text-pink-800 mt-1">دقيقة</span>
+          <div class="glass-wine rounded-2xl p-2.5 sm:p-5 text-center border border-roseGold/25 shadow-lg flex flex-col justify-center">
+            <span id="timer-minutes" class="font-bold text-xl sm:text-3xl md:text-5xl text-roseGold font-sans tracking-tight drop-shadow-sm">00</span>
+            <span class="text-[11px] sm:text-xs md:text-sm font-semibold text-ivory-300 mt-1">دقيقة</span>
           </div>
 
           <!-- Seconds Box -->
-          <div class="glass-card-deep rounded-2xl p-2 sm:p-4 md:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
-            <span id="timer-seconds" class="font-bold text-lg sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
-            <span class="text-[10px] sm:text-xs md:text-sm font-semibold text-pink-800 mt-1">ثانية</span>
+          <div class="glass-wine rounded-2xl p-2.5 sm:p-5 text-center border border-roseGold/25 shadow-lg flex flex-col justify-center">
+            <span id="timer-seconds" class="font-bold text-xl sm:text-3xl md:text-5xl text-roseGold font-sans tracking-tight drop-shadow-sm">00</span>
+            <span class="text-[11px] sm:text-xs md:text-sm font-semibold text-ivory-300 mt-1">ثانية</span>
           </div>
 
         </div>
 
-        <!-- Special Birthday Message Alert (Hidden until date is reached) -->
-        <div id="birthday-reached-message" class="hidden text-center py-6 px-4 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white rounded-2xl shadow-lg mt-4 animate-bounce">
+        <!-- Birthday Day Celebration Alert -->
+        <div id="birthday-reached-message" class="hidden text-center py-6 px-4 bg-gradient-to-r from-wine-700 via-roseGold-dark to-wine-600 text-ivory-100 rounded-2xl shadow-glow-gold mt-4 border border-roseGold animate-pulse">
           <p class="font-serif text-xl sm:text-2xl font-bold">
             النهارده 29/11.. عيد ميلاد أجمل واحدة في الدنيا! 🎉💖
           </p>
@@ -430,105 +562,106 @@
     </section>
 
     <!-- ==================================================== -->
-    <!-- 5. POLAROID PHOTO GALLERY                            -->
+    <!-- 5. POLAROID PHOTO GALLERY (PREMIUM SCRAPBOOK)        -->
     <!-- ==================================================== -->
-    <section id="gallery-section" class="scroll-mt-24">
+    <section id="gallery-section" class="scroll-mt-24 reveal-on-scroll">
       <div class="text-center mb-12 sm:mb-16">
-        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
-          ألبوم الذكريات 📸
+        <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass-wine border border-roseGold/30 text-roseGold text-xs sm:text-sm font-semibold mb-3 shadow-inner">
+          <span>📸</span>
+          <span>ألبوم الذكريات الخالدة</span>
         </div>
-        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-pink-800 mb-3">
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ivory-100 mb-3">
           أحلى ذكرياتنا سوا 📸
         </h2>
-        <p class="text-pink-700/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+        <p class="text-roseGold-light/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
           كل صورة هنا مش مجرد لقطة عادية.. دي لحظة محفورة في قلبي بتفاصيلها وضحكتك فيها ✨
         </p>
       </div>
 
-      <!-- 6 Polaroid Photo Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 pt-4 items-start">
+      <!-- 6 Polaroid Photo Cards Grid (Items-start, Uncropped, Click to Full Lightbox) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 pt-4 items-start">
         
         <!-- Polaroid Card 1 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-1 sm:-rotate-2 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./1.jpg', 'اليوم ده كان عادي لحد ما شوفتك، بقى من أحلى ذكرياتي ❤️')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./1.jpg" alt="ذكرى جميلة 1" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '1.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl -rotate-1 sm:-rotate-2 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(0)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./1.jpg" alt="ذكرى جميلة 1" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '1.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               اليوم ده كان عادي لحد ما شوفتك، بقى من أحلى ذكرياتي ❤️
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
         <!-- Polaroid Card 2 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-1 sm:rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./2.jpg', 'ضحكتك في الصورة دي قادرة تنسيني أي تعب في الدنيا ✨')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./2.jpg" alt="ذكرى جميلة 2" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '2.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl rotate-1 sm:rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(1)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./2.jpg" alt="ذكرى جميلة 2" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '2.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               ضحكتك في الصورة دي قادرة تنسيني أي تعب في الدنيا ✨
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
         <!-- Polaroid Card 3 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-1 sm:-rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./3.jpg', 'أحلى وقت في يومي هو الوقت اللي بكون فيه معاكي مهما كنا بنعمل إيه 🥰')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./3.jpg" alt="ذكرى جميلة 3" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '3.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl -rotate-1 sm:-rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(2)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./3.jpg" alt="ذكرى جميلة 3" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '3.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               أحلى وقت في يومي هو الوقت اللي بكون فيه معاكي مهما كنا بنعمل إيه 🥰
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
         <!-- Polaroid Card 4 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-1 sm:rotate-2 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./4.jpg', 'بصي لنفسك هنا.. عرفتي ليه أنا بحبك أوي كده؟ 🩷')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./4.jpg" alt="ذكرى جميلة 4" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '4.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl rotate-1 sm:rotate-2 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(3)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./4.jpg" alt="ذكرى جميلة 4" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '4.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               بصي لنفسك هنا.. عرفتي ليه أنا بحبك أوي كده؟ 🩷
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
         <!-- Polaroid Card 5 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-1 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./5.jpg', 'ذكرى حلوة من أيام كتير جاية لسه هنعيشها سوا إن شاء الله ♾️')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./5.jpg" alt="ذكرى جميلة 5" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '5.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl -rotate-1 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(4)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./5.jpg" alt="ذكرى جميلة 5" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '5.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               ذكرى حلوة من أيام كتير جاية لسه هنعيشها سوا إن شاء الله ♾️
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
         <!-- Polaroid Card 6 -->
-        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-1 sm:rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full" onclick="openLightbox('./6.jpg', 'ملامحك هنا ليها مكان خاص أوي في قلبي 💌')">
-          <div class="washi-tape"></div>
-          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
-            <img src="./6.jpg" alt="ذكرى جميلة 6" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '6.jpg')">
+        <div class="polaroid-frame relative p-3.5 sm:p-4 pb-6 rounded-2xl rotate-1 sm:rotate-3 cursor-pointer transition-all duration-300 max-w-sm sm:max-w-none mx-auto w-full group" onclick="openLightbox(5)">
+          <div class="rose-gold-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-wine-950/20 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./6.jpg" alt="ذكرى جميلة 6" class="w-full h-auto block object-contain rounded-xl transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" onerror="handleImageError(this, '6.jpg')">
           </div>
           <div class="text-center px-2">
-            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+            <p class="font-serif text-base sm:text-lg text-wine-950 leading-relaxed font-bold">
               ملامحك هنا ليها مكان خاص أوي في قلبي 💌
             </p>
-            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+            <span class="inline-block text-[11px] text-roseGold-deep mt-1 font-semibold group-hover:underline">اضغطي لتكبير الصورة 🔍</span>
           </div>
         </div>
 
@@ -538,15 +671,16 @@
     <!-- ==================================================== -->
     <!-- 6. "WHY I LOVE YOU" 3D FLIP CARDS                    -->
     <!-- ==================================================== -->
-    <section id="flip-cards-section" class="scroll-mt-24">
+    <section id="flip-cards-section" class="scroll-mt-24 reveal-on-scroll">
       <div class="text-center mb-12 sm:mb-16">
-        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
-          كلام من القلب 💖
+        <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass-wine border border-roseGold/30 text-roseGold text-xs sm:text-sm font-semibold mb-3 shadow-inner">
+          <span>💖</span>
+          <span>همسات من القلب</span>
         </div>
-        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-pink-800 mb-3">
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ivory-100 mb-3">
           رسايل صغيرة من قلبي ليكي 💌
         </h2>
-        <p class="text-pink-700/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+        <p class="text-roseGold-light/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
           اضغطي على أي كارت عشان يلف وتشوفي الكلام المستخبي وراه ✨
         </p>
       </div>
@@ -558,26 +692,26 @@
         <div class="flip-card perspective-1000 h-72 sm:h-80 max-w-sm sm:max-w-none mx-auto w-full" onclick="toggleFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front glass-card p-5 sm:p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-xl sm:text-2xl text-pink-600 shadow-sm">
+            <div class="flip-card-front glass-wine p-5 sm:p-6 flex flex-col items-center justify-between text-center border border-roseGold/30 hover:border-roseGold transition-colors shadow-xl">
+              <div class="w-12 h-12 rounded-2xl bg-wine-800/60 border border-roseGold/40 flex items-center justify-center text-2xl text-roseGold shadow-inner">
                 💭
               </div>
               <div class="my-auto">
-                <h3 class="font-serif text-xl sm:text-2xl font-bold text-pink-900 mb-1 sm:mb-2">ليه بحبك؟ 💭</h3>
-                <p class="text-[11px] sm:text-xs text-pink-600 font-medium">سؤال إجابته ملهاش نهاية في قلبي..</p>
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-ivory-100 mb-1 sm:mb-2">ليه بحبك؟ 💭</h3>
+                <p class="text-xs text-roseGold-light/75 font-medium">سؤال إجابته ملهاش نهاية في قلبي..</p>
               </div>
-              <span class="text-[11px] sm:text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+              <span class="text-xs font-bold text-roseGold bg-wine-950/70 px-3.5 py-1.5 rounded-full border border-roseGold/30 flex items-center gap-1.5 shadow-sm">
                 <span>اضغطي لقراءة الرسالة</span>
                 <span>👆</span>
               </span>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-gradient-to-br from-pink-600 via-rose-600 to-pink-700 text-white p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
-              <div class="text-right text-[11px] sm:text-xs opacity-70">💌 رسالة #1</div>
-              <p class="font-serif text-sm sm:text-base md:text-lg leading-relaxed font-bold my-auto">
+            <div class="flip-card-back bg-gradient-to-br from-wine-800 via-wine-700 to-wine-900 text-ivory-100 p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-2xl border border-roseGold/50">
+              <div class="text-right text-xs text-roseGold font-semibold">💌 رسالة #1</div>
+              <p class="font-serif text-sm sm:text-base leading-relaxed font-bold my-auto text-ivory-100">
                 عشان معاكي بكون على طبيعتي من غير ما أحسبها، وعشان حنيتك وطيبة قلبك اللي مفيش زيهم في الدنيا.
               </p>
-              <div class="text-[11px] sm:text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+              <div class="text-[11px] text-roseGold-light/70 font-medium">اضغطي للرجوع 🔄</div>
             </div>
           </div>
         </div>
@@ -586,26 +720,26 @@
         <div class="flip-card perspective-1000 h-72 sm:h-80 max-w-sm sm:max-w-none mx-auto w-full" onclick="toggleFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front glass-card p-5 sm:p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-xl sm:text-2xl text-pink-600 shadow-sm">
+            <div class="flip-card-front glass-wine p-5 sm:p-6 flex flex-col items-center justify-between text-center border border-roseGold/30 hover:border-roseGold transition-colors shadow-xl">
+              <div class="w-12 h-12 rounded-2xl bg-wine-800/60 border border-roseGold/40 flex items-center justify-center text-2xl text-roseGold shadow-inner">
                 🥺
               </div>
               <div class="my-auto">
-                <h3 class="font-serif text-xl sm:text-2xl font-bold text-pink-900 mb-1 sm:mb-2">افتحيه لما تكوني زعلانة 🥺</h3>
-                <p class="text-[11px] sm:text-xs text-pink-600 font-medium">عشان أفكرك دايماً إن زعلك غالي عندي..</p>
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-ivory-100 mb-1 sm:mb-2">افتحيه لما تكوني زعلانة 🥺</h3>
+                <p class="text-xs text-roseGold-light/75 font-medium">عشان أفكرك دايماً إن زعلك غالي عندي..</p>
               </div>
-              <span class="text-[11px] sm:text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+              <span class="text-xs font-bold text-roseGold bg-wine-950/70 px-3.5 py-1.5 rounded-full border border-roseGold/30 flex items-center gap-1.5 shadow-sm">
                 <span>اضغطي لقراءة الرسالة</span>
                 <span>👆</span>
               </span>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 text-white p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
-              <div class="text-right text-[11px] sm:text-xs opacity-70">💌 رسالة #2</div>
-              <p class="font-serif text-sm sm:text-base md:text-lg leading-relaxed font-bold my-auto">
+            <div class="flip-card-back bg-gradient-to-br from-wine-800 via-wine-700 to-wine-900 text-ivory-100 p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-2xl border border-roseGold/50">
+              <div class="text-right text-xs text-roseGold font-semibold">💌 رسالة #2</div>
+              <p class="font-serif text-sm sm:text-base leading-relaxed font-bold my-auto text-ivory-100">
                 مفيش أي حاجة في الدنيا تستاهل تضيع ضحكتك الحلوة دي.. حقك عليا لو زعلانة مني، وأنا جنبك في أي حاجة مضايقاكي لحد ما تروقي.
               </p>
-              <div class="text-[11px] sm:text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+              <div class="text-[11px] text-roseGold-light/70 font-medium">اضغطي للرجوع 🔄</div>
             </div>
           </div>
         </div>
@@ -614,26 +748,26 @@
         <div class="flip-card perspective-1000 h-72 sm:h-80 max-w-sm sm:max-w-none mx-auto w-full" onclick="toggleFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front glass-card p-5 sm:p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-xl sm:text-2xl text-pink-600 shadow-sm">
+            <div class="flip-card-front glass-wine p-5 sm:p-6 flex flex-col items-center justify-between text-center border border-roseGold/30 hover:border-roseGold transition-colors shadow-xl">
+              <div class="w-12 h-12 rounded-2xl bg-wine-800/60 border border-roseGold/40 flex items-center justify-center text-2xl text-roseGold shadow-inner">
                 ✨
               </div>
               <div class="my-auto">
-                <h3 class="font-serif text-xl sm:text-2xl font-bold text-pink-900 mb-1 sm:mb-2">أكتر حاجة بحبها فيكي ✨</h3>
-                <p class="text-[11px] sm:text-xs text-pink-600 font-medium">كل حاجة فيكي مميزة، بس دي بالذات غير..</p>
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-ivory-100 mb-1 sm:mb-2">أكتر حاجة بحبها فيكي ✨</h3>
+                <p class="text-xs text-roseGold-light/75 font-medium">كل حاجة فيكي مميزة، بس دي بالذات غير..</p>
               </div>
-              <span class="text-[11px] sm:text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+              <span class="text-xs font-bold text-roseGold bg-wine-950/70 px-3.5 py-1.5 rounded-full border border-roseGold/30 flex items-center gap-1.5 shadow-sm">
                 <span>اضغطي لقراءة الرسالة</span>
                 <span>👆</span>
               </span>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-gradient-to-br from-pink-600 via-rose-600 to-pink-700 text-white p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
-              <div class="text-right text-[11px] sm:text-xs opacity-70">💌 رسالة #3</div>
-              <p class="font-serif text-sm sm:text-base md:text-lg leading-relaxed font-bold my-auto">
+            <div class="flip-card-back bg-gradient-to-br from-wine-800 via-wine-700 to-wine-900 text-ivory-100 p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-2xl border border-roseGold/50">
+              <div class="text-right text-xs text-roseGold font-semibold">💌 رسالة #3</div>
+              <p class="font-serif text-sm sm:text-base leading-relaxed font-bold my-auto text-ivory-100">
                 تفاصيلك الصغيرة، طريقتك وإنتي بتحكيلي يومك، ولمعة عينك لما بتفرحي بحاجة بسيطة.
               </p>
-              <div class="text-[11px] sm:text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+              <div class="text-[11px] text-roseGold-light/70 font-medium">اضغطي للرجوع 🔄</div>
             </div>
           </div>
         </div>
@@ -642,26 +776,26 @@
         <div class="flip-card perspective-1000 h-72 sm:h-80 max-w-sm sm:max-w-none mx-auto w-full" onclick="toggleFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front glass-card p-5 sm:p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
-              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-xl sm:text-2xl text-pink-600 shadow-sm">
+            <div class="flip-card-front glass-wine p-5 sm:p-6 flex flex-col items-center justify-between text-center border border-roseGold/30 hover:border-roseGold transition-colors shadow-xl">
+              <div class="w-12 h-12 rounded-2xl bg-wine-800/60 border border-roseGold/40 flex items-center justify-center text-2xl text-roseGold shadow-inner">
                 💍
               </div>
               <div class="my-auto">
-                <h3 class="font-serif text-xl sm:text-2xl font-bold text-pink-900 mb-1 sm:mb-2">وعد ليكي 💍</h3>
-                <p class="text-[11px] sm:text-xs text-pink-600 font-medium">عهد هيفضل في قلبي مهما مر الوقت..</p>
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-ivory-100 mb-1 sm:mb-2">وعد ليكي 💍</h3>
+                <p class="text-xs text-roseGold-light/75 font-medium">عهد هيفضل في قلبي مهما مر الوقت..</p>
               </div>
-              <span class="text-[11px] sm:text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+              <span class="text-xs font-bold text-roseGold bg-wine-950/70 px-3.5 py-1.5 rounded-full border border-roseGold/30 flex items-center gap-1.5 shadow-sm">
                 <span>اضغطي لقراءة الرسالة</span>
                 <span>👆</span>
               </span>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 text-white p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
-              <div class="text-right text-[11px] sm:text-xs opacity-70">💌 رسالة #4</div>
-              <p class="font-serif text-sm sm:text-base md:text-lg leading-relaxed font-bold my-auto">
+            <div class="flip-card-back bg-gradient-to-br from-wine-800 via-wine-700 to-wine-900 text-ivory-100 p-5 sm:p-6 flex flex-col justify-between text-center rounded-3xl shadow-2xl border border-roseGold/50">
+              <div class="text-right text-xs text-roseGold font-semibold">💌 رسالة #4</div>
+              <p class="font-serif text-sm sm:text-base leading-relaxed font-bold my-auto text-ivory-100">
                 أوعدك إني هفضل دايماً سندك، وأول واحد يفرح لفرحك، واللي هيفضل يختارك في كل يوم جديد.
               </p>
-              <div class="text-[11px] sm:text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+              <div class="text-[11px] text-roseGold-light/70 font-medium">اضغطي للرجوع 🔄</div>
             </div>
           </div>
         </div>
@@ -670,222 +804,304 @@
     </section>
 
     <!-- ==================================================== -->
-    <!-- 7. INTERACTIVE BIRTHDAY CAKE & FINAL LETTER MODAL    -->
+    <!-- 7. DEDICATED PERSONAL LOVE LETTER SECTION            -->
     <!-- ==================================================== -->
-    <section id="cake-section" class="scroll-mt-24 text-center">
-      <div class="max-w-2xl mx-auto glass-card rounded-3xl p-8 sm:p-12 shadow-glass border border-white/90 relative overflow-hidden">
+    <section id="letter-section" class="scroll-mt-24 reveal-on-scroll">
+      <div class="max-w-3xl mx-auto parchment-card p-6 sm:p-12 md:p-14 rounded-3xl shadow-parchment relative overflow-hidden">
         
-        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-4 shadow-sm">
-          تمني أمنية من قلبك 🎂✨
+        <!-- Wax Seal Monogram Top Accent -->
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-gradient-to-tr from-wine-900 via-wine-700 to-roseGold-dark flex items-center justify-center text-3xl sm:text-4xl shadow-xl border-2 border-roseGold text-ivory-100">
+          💌
         </div>
-        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-pink-900 mb-2 sm:mb-3">
+
+        <div class="text-center mb-8">
+          <span class="inline-block px-4 py-1 rounded-full bg-roseGold/15 border border-roseGold/40 text-wine-900 text-xs sm:text-sm font-bold tracking-wider">
+            رسالة خاصة من القلب
+          </span>
+          <h2 class="font-serif text-2xl sm:text-4xl font-bold text-wine-950 mt-3">
+            إلى أجمل وأغلى إنسانة في حياتي 💖
+          </h2>
+        </div>
+
+        <!-- The Emotional Letter Content (100% Verbatim) -->
+        <div class="text-right space-y-5 font-serif text-base sm:text-xl text-wine-950 leading-loose">
+          <p class="font-bold text-lg sm:text-2xl text-wine-800 leading-relaxed">
+            كل سنة وإنتي طيبة يا أحلى وأغلى إنسانة في حياتي كلها..
+          </p>
+          <p>
+            حبيت أعملك حاجة بسيطة، بس معمولة مخصوص عشانك لوحدك، تفضل ذكرى حلوة بينا كل ما تفتحيها تفتكري إنتي غالية عندي إزاي.
+          </p>
+          <p>
+            من يوم ما دخلتي حياتي وإنتي غيرتي فيها حاجات كتير للأحسن، وجودك لوحده بيهون عليا أي يوم صعب، وكلامك وضحكتك هما الراحة اللي بدور عليها في آخر كل يوم.
+          </p>
+          <p>
+            في عيد ميلادك النهارده، بتمنالك سنة جديدة شبه قلبك الأبيض، مليانة فرحة ونجاح وراحة بال، وتحققي فيها كل حاجة بتتمنيها.. وبتمنى لنفسي إن كل سنينك الجاية نحتفل بيها وإحنا مع بعض.
+          </p>
+          <p class="font-bold text-lg sm:text-2xl text-wine-700 pt-3 border-t border-roseGold/30">
+            كل سنة وإنتي حبيبتي، وصحبتي، وأجمل حاجة حصلتلي.. بحبك أوي 💖
+          </p>
+        </div>
+
+        <!-- Ornate Ribbon Ending -->
+        <div class="mt-8 text-center text-roseGold-deep text-sm font-semibold tracking-widest flex items-center justify-center gap-2">
+          <span>—</span>
+          <span>دائماً وإلى الأبد ♾️</span>
+          <span>—</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- 8. INTERACTIVE BIRTHDAY CAKE & FLAME BLOWING         -->
+    <!-- ==================================================== -->
+    <section id="cake-section" class="scroll-mt-24 text-center reveal-on-scroll">
+      <div class="max-w-2xl mx-auto glass-wine rounded-3xl p-6 sm:p-12 shadow-2xl border border-roseGold/30 relative overflow-hidden">
+        
+        <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-wine-950/80 border border-roseGold/30 text-roseGold text-xs sm:text-sm font-semibold mb-4 shadow-inner">
+          <span>🎂</span>
+          <span>تمني أمنية من قلبك</span>
+          <span>✨</span>
+        </div>
+
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-ivory-100 mb-2">
           تورتة عيد ميلادك 🎂
         </h2>
-        <p class="text-pink-700/80 text-xs sm:text-base font-medium mb-6 sm:mb-10 max-w-md mx-auto">
-          غمضي عينك، تمني أجمل أمنية لنفسك، واطفي الشمعة عشان تفتحي رسالتي الأخيرة ليكي 💖
+        <p class="text-roseGold-light/80 text-xs sm:text-base font-medium mb-8 max-w-md mx-auto">
+          غمضي عينك، تمني أجمل أمنية لنفسك، واطفي الشمعة عشان نحتفل سوا 💖
         </p>
 
-        <!-- Cute Birthday Cake Graphics (SVG & CSS Candle) -->
-        <div class="relative w-52 h-44 sm:w-64 sm:h-56 mx-auto mb-8 sm:mb-10 flex flex-col items-center justify-end select-none">
+        <!-- Birthday Cake Graphics (Vector Artwork with Realistic Candle) -->
+        <div class="relative w-56 h-48 sm:w-64 sm:h-56 mx-auto mb-8 flex flex-col items-center justify-end select-none cursor-pointer" onclick="blowCandle()" title="اضغطي على الشمعة لإطفائها">
           
           <!-- Candle Assembly -->
           <div class="relative flex flex-col items-center z-20 mb-[-2px]">
-            <!-- Flame & Smoke -->
-            <div class="relative w-6 h-10 flex justify-center items-end">
-              <div id="candle-flame" class="flame"></div>
-              <div id="candle-smoke" class="smoke"></div>
+            <!-- Flame & Halo -->
+            <div class="candle-flame-wrapper">
+              <div id="candle-halo" class="flame-halo"></div>
+              <div id="candle-flame" class="candle-flame-body"></div>
+              <div id="candle-smoke" class="candle-smoke-puff"></div>
             </div>
             <!-- Candle Wick -->
-            <div class="w-1 h-3 bg-stone-700 rounded-t-sm"></div>
+            <div class="w-1 h-3 bg-stone-800 rounded-t-sm"></div>
             <!-- Candle Body -->
-            <div class="w-4 h-14 bg-gradient-to-r from-pink-200 via-rose-300 to-pink-200 rounded-t-md shadow-sm border border-pink-300/60 relative overflow-hidden">
-              <!-- Stripes on candle -->
-              <div class="absolute inset-0 opacity-40 bg-[repeating-linear-gradient(45deg,#fff,#fff_4px,#f43f5e_4px,#f43f5e_8px)]"></div>
+            <div class="w-4 h-14 bg-gradient-to-r from-ivory-200 via-roseGold-light to-ivory-200 rounded-t-md shadow-md border border-roseGold/50 relative overflow-hidden">
+              <div class="absolute inset-0 opacity-40 bg-[repeating-linear-gradient(45deg,#fff,#fff_4px,#9c5938_4px,#9c5938_8px)]"></div>
             </div>
           </div>
 
-          <!-- Cake Tiers (SVG for pristine vector beauty) -->
-          <svg viewBox="0 0 240 140" class="w-full h-auto drop-shadow-xl overflow-visible">
+          <!-- Cake Tiers SVG -->
+          <svg viewBox="0 0 240 140" class="w-full h-auto drop-shadow-2xl overflow-visible">
             <defs>
-              <linearGradient id="cakeFrosting" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fff1f2" />
-                <stop offset="100%" stop-color="#fbcfe8" />
+              <linearGradient id="luxuryFrosting" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fffdfa" />
+                <stop offset="50%" stop-color="#faf6ee" />
+                <stop offset="100%" stop-color="#f0e6d4" />
               </linearGradient>
-              <linearGradient id="cakeBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fda4af" />
-                <stop offset="100%" stop-color="#f43f5e" />
+              <linearGradient id="velvetTier" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4e0c29" />
+                <stop offset="50%" stop-color="#6b1137" />
+                <stop offset="100%" stop-color="#38091d" />
               </linearGradient>
-              <linearGradient id="plateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff" />
-                <stop offset="100%" stop-color="#e2e8f0" />
+              <linearGradient id="goldPlate" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f5d3c3" />
+                <stop offset="50%" stop-color="#e0a384" />
+                <stop offset="100%" stop-color="#9c5938" />
               </linearGradient>
             </defs>
 
             <!-- Cake Plate -->
-            <ellipse cx="120" cy="132" rx="110" ry="12" fill="url(#plateGrad)" stroke="#cbd5e1" stroke-width="2" />
+            <ellipse cx="120" cy="132" rx="110" ry="12" fill="url(#goldPlate)" stroke="#e0a384" stroke-width="1.5" />
 
             <!-- Bottom Tier Body -->
-            <path d="M 40,85 Q 120,105 200,85 L 200,120 Q 120,140 40,120 Z" fill="url(#cakeBody)" />
+            <path d="M 40,85 Q 120,105 200,85 L 200,120 Q 120,140 40,120 Z" fill="url(#velvetTier)" />
             <!-- Bottom Tier Top -->
-            <ellipse cx="120" cy="85" rx="80" ry="20" fill="url(#cakeFrosting)" stroke="#f472b6" stroke-width="1.5" />
-            <!-- Bottom Tier Icing Drips -->
-            <path d="M 40,85 Q 50,102 60,88 Q 70,106 80,89 Q 95,110 110,88 Q 125,108 140,89 Q 155,107 170,88 Q 185,105 200,85" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+            <ellipse cx="120" cy="85" rx="80" ry="20" fill="url(#luxuryFrosting)" stroke="#e0a384" stroke-width="1.5" />
+            <!-- Bottom Tier Frosting Drips -->
+            <path d="M 40,85 Q 50,102 60,88 Q 70,106 80,89 Q 95,110 110,88 Q 125,108 140,89 Q 155,107 170,88 Q 185,105 200,85" fill="none" stroke="#fffdfa" stroke-width="4.5" stroke-linecap="round" />
 
             <!-- Top Tier Body -->
-            <path d="M 65,45 Q 120,62 175,45 L 175,75 Q 120,92 65,75 Z" fill="url(#cakeBody)" />
+            <path d="M 65,45 Q 120,62 175,45 L 175,75 Q 120,92 65,75 Z" fill="url(#velvetTier)" />
             <!-- Top Tier Top -->
-            <ellipse cx="120" cy="45" rx="55" ry="15" fill="url(#cakeFrosting)" stroke="#f472b6" stroke-width="1.5" />
-            <!-- Top Tier Icing Drips -->
-            <path d="M 65,45 Q 75,58 85,47 Q 95,62 105,48 Q 120,64 135,47 Q 150,62 165,46 L 175,45" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" />
+            <ellipse cx="120" cy="45" rx="55" ry="15" fill="url(#luxuryFrosting)" stroke="#e0a384" stroke-width="1.5" />
+            <!-- Top Tier Frosting Drips -->
+            <path d="M 65,45 Q 75,58 85,47 Q 95,62 105,48 Q 120,64 135,47 Q 150,62 165,46 L 175,45" fill="none" stroke="#fffdfa" stroke-width="4" stroke-linecap="round" />
 
-            <!-- Strawberries & Cherries on top -->
-            <circle cx="95" cy="42" r="5" fill="#e11d48" />
-            <circle cx="145" cy="42" r="5" fill="#e11d48" />
-            <circle cx="120" cy="52" r="4.5" fill="#e11d48" />
+            <!-- Strawberries & Golden Pearls -->
+            <circle cx="95" cy="42" r="5" fill="#9f1239" />
+            <circle cx="145" cy="42" r="5" fill="#9f1239" />
+            <circle cx="120" cy="52" r="4.5" fill="#9f1239" />
+            <circle cx="95" cy="40" r="1.5" fill="#fbbf24" />
+            <circle cx="145" cy="40" r="1.5" fill="#fbbf24" />
 
-            <!-- Decorative Sprinkles -->
-            <rect x="75" y="80" width="6" height="2" rx="1" fill="#ec4899" transform="rotate(15 75 80)" />
-            <rect x="110" y="98" width="6" height="2" rx="1" fill="#f59e0b" transform="rotate(-20 110 98)" />
-            <rect x="150" y="82" width="6" height="2" rx="1" fill="#3b82f6" transform="rotate(45 150 82)" />
-            <rect x="175" y="95" width="6" height="2" rx="1" fill="#10b981" transform="rotate(-15 175 95)" />
-            <rect x="90" y="60" width="5" height="2" rx="1" fill="#ec4899" transform="rotate(-10 90 60)" />
-            <rect x="140" y="62" width="5" height="2" rx="1" fill="#f59e0b" transform="rotate(30 140 62)" />
+            <!-- Decorative Gold Sprinkles -->
+            <rect x="75" y="80" width="6" height="2" rx="1" fill="#e0a384" transform="rotate(15 75 80)" />
+            <rect x="110" y="98" width="6" height="2" rx="1" fill="#f5d3c3" transform="rotate(-20 110 98)" />
+            <rect x="150" y="82" width="6" height="2" rx="1" fill="#e0a384" transform="rotate(45 150 82)" />
+            <rect x="175" y="95" width="6" height="2" rx="1" fill="#f5d3c3" transform="rotate(-15 175 95)" />
+            <rect x="90" y="60" width="5" height="2" rx="1" fill="#e0a384" transform="rotate(-10 90 60)" />
+            <rect x="140" y="62" width="5" height="2" rx="1" fill="#f5d3c3" transform="rotate(30 140 62)" />
           </svg>
         </div>
 
-        <!-- Blow Candle Button -->
-        <div class="relative z-10">
-          <button id="blow-candle-btn" onclick="blowCandle()" class="px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-lg sm:text-xl shadow-xl shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-3">
+        <!-- Controls: Manual Blow + Optional Microphone Blow -->
+        <div class="relative z-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <button id="blow-candle-btn" onclick="blowCandle()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-wine-700 via-wine-600 to-roseGold-deep text-ivory-100 font-bold text-base sm:text-lg shadow-xl shadow-wine-950 hover:shadow-glow-gold hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 border border-roseGold/40">
             <span>اطفي الشمعة واتمني أمنية ✨</span>
             <span>💨</span>
           </button>
+
+          <!-- Explicit Opt-in Microphone Blowing -->
+          <button id="mic-blow-btn" onclick="toggleMicrophoneBlow()" class="px-5 py-3 rounded-full bg-wine-900/80 hover:bg-wine-800 text-roseGold font-semibold text-xs sm:text-sm border border-roseGold/30 transition-all inline-flex items-center gap-2" title="النفخ الحقيقي في المايكروفون">
+            <span id="mic-icon">🎤</span>
+            <span id="mic-label">اطفي بالنفخ في المايك</span>
+          </button>
+        </div>
+
+        <div id="mic-feedback" class="text-xs text-roseGold-light/75 mt-3 hidden">
+          جاري الاستماع.. انفخي في المايك الآن 💨
         </div>
 
       </div>
     </section>
 
-    <!-- FOOTER NOTE -->
-    <footer class="text-center pt-8 pb-16 text-pink-800/70 text-sm font-medium">
-      <p class="mb-2">كل سنة وإنتي حبيبتي وضحكة أيامي 💖 29 / 11</p>
-      <p class="text-xs text-pink-600/70">صُنع بكل حب خصيصاً لأجمل واحدة في الدنيا ✨</p>
+    <!-- ==================================================== -->
+    <!-- FOOTER                                               -->
+    <!-- ==================================================== -->
+    <footer class="text-center pt-8 pb-16 text-roseGold/70 text-sm font-medium border-t border-roseGold/15">
+      <p class="mb-2 text-ivory-200">كل سنة وإنتي حبيبتي وضحكة أيامي 💖 29 / 11</p>
+      <p class="text-xs text-roseGold/60">صُنع بكل حب خصيصاً لأجمل واحدة في الدنيا ✨</p>
     </footer>
 
   </main>
 
   <!-- ==================================================== -->
-  <!-- FINAL LOVE LETTER MODAL (Glassmorphism Modal)        -->
+  <!-- FULLSCREEN CINEMATIC LIGHTBOX WITH PREV/NEXT         -->
   <!-- ==================================================== -->
-  <div id="love-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-pink-950/50 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-700 overscroll-contain">
-    <div class="relative max-w-2xl w-full glass-card-deep p-5 sm:p-10 rounded-3xl shadow-2xl border border-white/90 text-center max-h-[88vh] overflow-y-auto transform scale-95 transition-all duration-500" id="love-modal-card">
+  <div id="photo-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 overscroll-contain select-none" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="عرض الصورة المكبرة">
+    
+    <!-- Top Action Bar -->
+    <div class="absolute top-4 inset-x-4 max-w-4xl mx-auto flex items-center justify-between z-10 pointer-events-auto">
+      <!-- Image Counter -->
+      <div id="lightbox-counter" class="text-xs sm:text-sm font-bold text-roseGold bg-wine-950/80 px-3.5 py-1.5 rounded-full border border-roseGold/30 backdrop-blur-md">
+        صورة 1 من 6
+      </div>
+      <!-- Close Button -->
+      <button onclick="closeLightbox()" class="text-ivory-100 bg-white/10 hover:bg-white/25 rounded-full w-10 h-10 flex items-center justify-center text-xl transition-all border border-white/20 focus:outline-none" title="إغلاق (Esc)" aria-label="إغلاق">
+        ✕
+      </button>
+    </div>
+
+    <!-- Main Image Presentation -->
+    <div class="relative max-w-4xl w-full max-h-[85vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
       
-      <!-- Top Wax Seal Stamp -->
-      <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-2xl sm:text-3xl shadow-lg shadow-pink-500/30 text-white">
-        💌
+      <!-- Prev Button -->
+      <button onclick="prevLightbox(event)" class="absolute -right-2 sm:-right-14 top-1/2 -translate-y-1/2 text-ivory-100 bg-wine-950/80 hover:bg-wine-800/90 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl sm:text-2xl transition-all border border-roseGold/30 shadow-xl z-20 focus:outline-none" title="الصورة السابقة (السهم الأيمن)" aria-label="الصورة السابقة">
+        ‹
+      </button>
+
+      <!-- Next Button -->
+      <button onclick="nextLightbox(event)" class="absolute -left-2 sm:-left-14 top-1/2 -translate-y-1/2 text-ivory-100 bg-wine-950/80 hover:bg-wine-800/90 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl sm:text-2xl transition-all border border-roseGold/30 shadow-xl z-20 focus:outline-none" title="الصورة التالية (السهم الأيسر)" aria-label="الصورة التالية">
+        ›
+      </button>
+
+      <!-- Image Wrapper with Luxury Border -->
+      <div class="bg-wine-950/40 p-2 sm:p-3 rounded-2xl shadow-2xl border border-roseGold/40 max-h-[72vh] flex flex-col items-center justify-center overflow-hidden">
+        <img id="lightbox-img" src="" alt="صورة مكبرة" class="max-h-[66vh] w-auto max-w-full rounded-xl object-contain transition-opacity duration-300" />
       </div>
 
-      <!-- Modal Badge -->
-      <div class="inline-block px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-pink-100 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
-        رسالة من أعماق قلبي ✨
-      </div>
-
-      <!-- Love Letter Content -->
-      <div class="text-right space-y-3 sm:space-y-4 font-serif text-sm sm:text-base md:text-lg text-pink-950 leading-relaxed sm:leading-loose">
-        <p class="font-bold text-base sm:text-lg md:text-xl text-pink-700">
-          كل سنة وإنتي طيبة يا أحلى وأغلى إنسانة في حياتي كلها..
-        </p>
-        <p>
-          حبيت أعملك حاجة بسيطة، بس معمولة مخصوص عشانك لوحدك، تفضل ذكرى حلوة بينا كل ما تفتحيها تفتكري إنتي غالية عندي إزاي.
-        </p>
-        <p>
-          من يوم ما دخلتي حياتي وإنتي غيرتي فيها حاجات كتير للأحسن، وجودك لوحده بيهون عليا أي يوم صعب، وكلامك وضحكتك هما الراحة اللي بدور عليها في آخر كل يوم.
-        </p>
-        <p>
-          في عيد ميلادك النهارده، بتمنالك سنة جديدة شبه قلبك الأبيض، مليانة فرحة ونجاح وراحة بال، وتحققي فيها كل حاجة بتتمنيها.. وبتمنى لنفسي إن كل سنينك الجاية نحتفل بيها وإحنا مع بعض.
-        </p>
-        <p class="font-bold text-base sm:text-lg md:text-xl text-pink-700 pt-1 sm:pt-2">
-          كل سنة وإنتي حبيبتي، وصحبتي، وأجمل حاجة حصلتلي.. بحبك أوي 💖
-        </p>
-      </div>
-
-      <!-- Modal Buttons -->
-      <div class="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-pink-200/80 flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
-        <button onclick="closeModal()" class="px-6 sm:px-8 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all">
-          أحبك من كل قلبي 💖
-        </button>
-        <button onclick="relightCandle()" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white text-pink-700 border border-pink-200 font-bold text-sm sm:text-base hover:bg-pink-50 transition-all">
-          إعادة إشعال الشمعة 🕯️
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ==================================================== -->
-  <!-- PHOTO LIGHTBOX MODAL (Full Uncropped Image View)     -->
-  <!-- ==================================================== -->
-  <div id="photo-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-pink-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 overscroll-contain" onclick="closeLightbox()">
-    <div class="relative max-w-3xl w-full max-h-[92vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
-      <button onclick="closeLightbox()" class="absolute -top-11 left-0 sm:left-2 text-white bg-white/20 hover:bg-white/40 rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl transition-all shadow-lg" title="إغلاق">✕</button>
-      <div class="bg-white p-2 sm:p-3 rounded-2xl shadow-2xl border border-white/80 max-h-[76vh] flex flex-col items-center justify-center overflow-hidden">
-        <img id="lightbox-img" src="" alt="صورة كاملة" class="max-h-[70vh] w-auto max-w-full rounded-xl object-contain" />
-      </div>
-      <p id="lightbox-caption" class="text-white text-center font-serif text-sm sm:text-lg font-bold mt-2.5 px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 max-w-xl"></p>
+      <!-- Caption Box -->
+      <p id="lightbox-caption" class="text-ivory-100 text-center font-serif text-sm sm:text-lg font-bold mt-3 px-5 py-2.5 rounded-xl bg-wine-950/90 backdrop-blur-md border border-roseGold/30 max-w-xl shadow-lg leading-relaxed"></p>
     </div>
   </div>
 
 
   <!-- ==================================================== -->
-  <!-- JAVASCRIPT LOGIC                                     -->
+  <!-- JAVASCRIPT LOGIC & MOTION ENGINE                     -->
   <!-- ==================================================== -->
   <script>
     /* ===================================================
-       1. ENTRANCE SCREEN & AUDIO MANAGEMENT
+       1. AUDIO MANAGEMENT WITH VOLUME & SESSION STORAGE
        =================================================== */
     const bgMusic = document.getElementById('bg-music');
     const enterBtn = document.getElementById('enter-btn');
     const lockScreen = document.getElementById('lock-screen');
     const musicToggleBtn = document.getElementById('music-toggle-btn');
+    const muteToggleBtn = document.getElementById('mute-toggle-btn');
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeIcon = document.getElementById('volume-icon');
     const musicStatusText = document.getElementById('music-status-text');
     const musicEqualizer = document.getElementById('music-equalizer');
     const playerHeart = document.getElementById('player-heart');
 
-    // Confetti Cannon for celebrations
-    function shootConfetti(particleCount = 100) {
+    // Restore saved volume or default to 0.8
+    const savedVolume = sessionStorage.getItem('bg_volume');
+    if (savedVolume !== null && bgMusic) {
+      bgMusic.volume = parseFloat(savedVolume);
+      volumeSlider.value = savedVolume;
+    } else if (bgMusic) {
+      bgMusic.volume = 0.8;
+    }
+
+    function updateVolumeIcon(vol) {
+      if (vol === 0 || (bgMusic && bgMusic.muted)) {
+        volumeIcon.textContent = '🔇';
+      } else if (vol < 0.5) {
+        volumeIcon.textContent = '🔉';
+      } else {
+        volumeIcon.textContent = '🔊';
+      }
+    }
+    updateVolumeIcon(bgMusic.volume);
+
+    volumeSlider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      if (bgMusic) {
+        bgMusic.volume = val;
+        bgMusic.muted = (val === 0);
+        updateVolumeIcon(val);
+        sessionStorage.setItem('bg_volume', val);
+      }
+    });
+
+    muteToggleBtn.addEventListener('click', () => {
+      if (!bgMusic) return;
+      bgMusic.muted = !bgMusic.muted;
+      updateVolumeIcon(bgMusic.muted ? 0 : bgMusic.volume);
+    });
+
+    function shootConfetti(particleCount = 120) {
       if (typeof confetti === 'function') {
         confetti({
           particleCount: particleCount,
-          spread: 80,
+          spread: 85,
           origin: { y: 0.6 },
-          colors: ['#ec4899', '#db2777', '#f43f5e', '#fbbf24', '#fbcfe8', '#ffffff']
+          colors: ['#e0a384', '#6b1137', '#9c5938', '#faf6ee', '#fda4af', '#fbbf24']
         });
       }
     }
 
-    // Update Floating Music Player UI
     function updateMusicPlayerUI(isPlaying) {
       if (isPlaying) {
         musicStatusText.textContent = "يعمل الآن 🎶";
         musicEqualizer.classList.remove('paused');
-        playerHeart.classList.add('pulse-heart');
+        playerHeart.classList.add('animate-pulse');
       } else {
         musicStatusText.textContent = "متوقف مؤقتاً ⏸️";
         musicEqualizer.classList.add('paused');
-        playerHeart.classList.remove('pulse-heart');
+        playerHeart.classList.remove('animate-pulse');
       }
     }
 
     // Entrance button click handler
     enterBtn.addEventListener('click', () => {
-      // 1. Confetti burst
-      shootConfetti(120);
+      shootConfetti(140);
 
-      // 2. Play song at second 28 (Adele's singing start)
+      // Play audio starting right at 28s where Adele starts singing
       if (bgMusic) {
         try {
           bgMusic.currentTime = 28;
-        } catch (e) {
-          console.log("Could not set currentTime yet:", e);
-        }
+        } catch (e) {}
 
         const ensureTime28 = () => {
           try { bgMusic.currentTime = 28; } catch(e){}
@@ -895,17 +1111,17 @@
           bgMusic.addEventListener('loadedmetadata', ensureTime28, { once: true });
           bgMusic.addEventListener('canplay', ensureTime28, { once: true });
         }
-        
+
         bgMusic.play().then(() => {
           try { bgMusic.currentTime = 28; } catch(e){}
           updateMusicPlayerUI(true);
         }).catch(err => {
-          console.warn("Audio autoplay blocked or audio file missing:", err);
+          console.warn("Audio autoplay blocked:", err);
           updateMusicPlayerUI(false);
         });
       }
 
-      // 3. Smooth fade out overlay
+      // Smooth curtain fade out
       lockScreen.classList.add('opacity-0', 'pointer-events-none');
       setTimeout(() => {
         lockScreen.style.display = 'none';
@@ -913,7 +1129,6 @@
       }, 1000);
     });
 
-    // Floating Player Play/Pause Toggle
     musicToggleBtn.addEventListener('click', () => {
       if (!bgMusic) return;
       if (bgMusic.paused) {
@@ -957,7 +1172,7 @@
         charIndex++;
         if (charIndex === currentPhrase.length) {
           isDeleting = true;
-          setTimeout(typeNextChar, 2500); // Wait 2.5s before deleting
+          setTimeout(typeNextChar, 2500);
           return;
         }
         setTimeout(typeNextChar, 60);
@@ -976,13 +1191,13 @@
 
 
     /* ===================================================
-       3. 29/11 INTERACTIVE TIMER & ANNIVERSARY
+       3. 29/11 INTERACTIVE TIMER & ANNIVERSARY COUNTUP
        =================================================== */
-    // عدل سنة البداية هنا لو حابب (12 سبتمبر 2023 الساعة 1:00 صباحاً)
+    // تاريخ بداية حبنا: 12 سبتمبر 2023 الساعة 1:00 صباحاً
     const startDate = new Date("2023-09-12T01:00:00");
     const targetBirthdayDate = new Date("2026-11-29T00:00:00");
 
-    let currentTimerMode = 'countdown'; // 'countdown' or 'anniversary'
+    let currentTimerMode = 'countdown';
 
     const tabCountdown = document.getElementById('tab-countdown');
     const tabAnniversary = document.getElementById('tab-anniversary');
@@ -999,13 +1214,13 @@
     function switchTimerTab(mode) {
       currentTimerMode = mode;
       if (mode === 'countdown') {
-        tabCountdown.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm";
-        tabAnniversary.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800";
+        tabCountdown.className = "px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-gradient-to-r from-roseGold to-roseGold-dark text-wine-950 shadow-md";
+        tabAnniversary.className = "px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-roseGold hover:text-ivory-100";
         timerHeading.textContent = "العد التنازلي ليوم ميلادك السعيد 🎉";
         timerSubtext.textContent = "كل ثانية بتقربنا لليوم اللي اتولدت فيه روحي ونور حياتي ✨";
       } else {
-        tabAnniversary.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm";
-        tabCountdown.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800";
+        tabAnniversary.className = "px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-gradient-to-r from-roseGold to-roseGold-dark text-wine-950 shadow-md";
+        tabCountdown.className = "px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-roseGold hover:text-ivory-100";
         timerHeading.textContent = "بقالنا قد إيه سوا ♾️💖";
         timerSubtext.textContent = "من يوم 12 / 9 / 2023 الساعة 1:00 صباحاً.. وكل لحظة بتعدي بحبك فيها أكتر ❤️";
       }
@@ -1019,7 +1234,6 @@
         const diff = targetBirthdayDate - now;
 
         if (diff <= 0) {
-          // Date reached or passed!
           timerGrid.classList.add('hidden');
           birthdayReachedMsg.classList.remove('hidden');
           return;
@@ -1038,7 +1252,6 @@
           secondsEl.textContent = String(seconds).padStart(2, '0');
         }
       } else {
-        // Count Up from startDate
         timerGrid.classList.remove('hidden');
         birthdayReachedMsg.classList.add('hidden');
 
@@ -1060,25 +1273,17 @@
 
 
     /* ===================================================
-       4. POLAROID ERROR FALLBACK PLACEHOLDER
+       4. POLAROID FALLBACK IMAGE HANDLER
        =================================================== */
     function handleImageError(img, filename) {
       img.onerror = null;
-      // High quality romantic SVG placeholder with filename guidance
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
-          <defs>
-            <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fff1f2" />
-              <stop offset="50%" stop-color="#fce7f3" />
-              <stop offset="100%" stop-color="#fbcfe8" />
-            </linearGradient>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#bgG)"/>
-          <circle cx="300" cy="190" r="75" fill="#f472b6" opacity="0.25"/>
-          <path d="M300,165 C285,135 245,135 230,160 C205,200 300,265 300,265 C300,265 395,200 370,160 C355,135 315,135 300,165 Z" fill="#ec4899"/>
-          <text x="300" y="320" font-family="'Cairo', sans-serif" font-size="22" font-weight="bold" fill="#be185d" text-anchor="middle">صورة ${filename}</text>
-          <text x="300" y="355" font-family="'Cairo', sans-serif" font-size="15" fill="#db2777" text-anchor="middle">أحلى ذكرياتنا سوا 💖</text>
+          <rect width="100%" height="100%" fill="#1f040f"/>
+          <circle cx="300" cy="190" r="70" fill="#38091d" stroke="#e0a384" stroke-width="2"/>
+          <path d="M300,165 C285,135 245,135 230,160 C205,200 300,265 300,265 C300,265 395,200 370,160 C355,135 315,135 300,165 Z" fill="#e0a384"/>
+          <text x="300" y="320" font-family="'Cairo', sans-serif" font-size="22" font-weight="bold" fill="#faf6ee" text-anchor="middle">صورة ${filename}</text>
+          <text x="300" y="355" font-family="'Cairo', sans-serif" font-size="15" fill="#e0a384" text-anchor="middle">أحلى ذكرياتنا سوا 💖</text>
         </svg>
       `;
       img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
@@ -1094,136 +1299,287 @@
 
 
     /* ===================================================
-       6. INTERACTIVE BIRTHDAY CAKE & MODAL
+       6. FULLSCREEN GALLERY LIGHTBOX WITH NEXT / PREV
        =================================================== */
-    let candleBlown = false;
-    const candleFlame = document.getElementById('candle-flame');
-    const candleSmoke = document.getElementById('candle-smoke');
-    const loveModal = document.getElementById('love-modal');
-    const loveModalCard = document.getElementById('love-modal-card');
-    const blowBtn = document.getElementById('blow-candle-btn');
+    const galleryItems = [
+      { src: './1.jpg', caption: 'اليوم ده كان عادي لحد ما شوفتك، بقى من أحلى ذكرياتي ❤️' },
+      { src: './2.jpg', caption: 'ضحكتك في الصورة دي قادرة تنسيني أي تعب في الدنيا ✨' },
+      { src: './3.jpg', caption: 'أحلى وقت في يومي هو الوقت اللي بكون فيه معاكي مهما كنا بنعمل إيه 🥰' },
+      { src: './4.jpg', caption: 'بصي لنفسك هنا.. عرفتي ليه أنا بحبك أوي كده؟ 🩷' },
+      { src: './5.jpg', caption: 'ذكرى حلوة من أيام كتير جاية لسه هنعيشها سوا إن شاء الله ♾️' },
+      { src: './6.jpg', caption: 'ملامحك هنا ليها مكان خاص أوي في قلبي 💌' }
+    ];
 
-    function blowCandle() {
-      if (candleBlown) {
-        openModal();
-        return;
-      }
-      candleBlown = true;
-
-      // Extinguish flame with animation
-      candleFlame.classList.add('flame-extinguished');
-      candleSmoke.classList.add('smoke-puff');
-
-      // Blast celebratory confetti & hearts
-      shootConfetti(140);
-      setTimeout(() => shootConfetti(90), 400);
-
-      blowBtn.innerHTML = `<span>اتحققت الأمنية بإذن الله ✨</span><span>💖</span>`;
-      blowBtn.classList.remove('from-pink-500', 'via-rose-500', 'to-pink-600');
-      blowBtn.classList.add('from-emerald-500', 'to-teal-600');
-
-      // Pop open love letter modal
-      setTimeout(() => {
-        openModal();
-      }, 900);
-    }
-
-    function openModal() {
-      loveModal.classList.remove('opacity-0', 'pointer-events-none');
-      loveModalCard.classList.remove('scale-95');
-      loveModalCard.classList.add('scale-100');
-    }
-
-    function closeModal() {
-      loveModal.classList.add('opacity-0', 'pointer-events-none');
-      loveModalCard.classList.remove('scale-100');
-      loveModalCard.classList.add('scale-95');
-    }
-
-    function relightCandle() {
-      closeModal();
-      candleBlown = false;
-      candleFlame.classList.remove('flame-extinguished');
-      candleSmoke.classList.remove('smoke-puff');
-      blowBtn.innerHTML = `<span>اطفي الشمعة واتمني أمنية ✨</span><span>💨</span>`;
-      blowBtn.classList.remove('from-emerald-500', 'to-teal-600');
-      blowBtn.classList.add('from-pink-500', 'via-rose-500', 'to-pink-600');
-    }
-
-    // Close modal when clicking outside card
-    loveModal.addEventListener('click', (e) => {
-      if (e.target === loveModal) {
-        closeModal();
-      }
-    });
-
-    /* ===================================================
-       PHOTO LIGHTBOX FUNCTIONALITY
-       =================================================== */
+    let currentLightboxIndex = 0;
     const photoLightbox = document.getElementById('photo-lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxCounter = document.getElementById('lightbox-counter');
 
-    function openLightbox(src, caption) {
-      if (!photoLightbox || !lightboxImg || !lightboxCaption) return;
-      lightboxImg.src = src;
-      lightboxCaption.textContent = caption;
+    function updateLightbox() {
+      const item = galleryItems[currentLightboxIndex];
+      lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        lightboxImg.src = item.src;
+        lightboxCaption.textContent = item.caption;
+        lightboxCounter.textContent = `صورة ${currentLightboxIndex + 1} من ${galleryItems.length}`;
+        lightboxImg.style.opacity = '1';
+      }, 150);
+    }
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      updateLightbox();
       photoLightbox.classList.remove('opacity-0', 'pointer-events-none');
     }
 
     function closeLightbox() {
-      if (!photoLightbox) return;
       photoLightbox.classList.add('opacity-0', 'pointer-events-none');
     }
 
+    function nextLightbox(e) {
+      if (e) e.stopPropagation();
+      currentLightboxIndex = (currentLightboxIndex + 1) % galleryItems.length;
+      updateLightbox();
+    }
+
+    function prevLightbox(e) {
+      if (e) e.stopPropagation();
+      currentLightboxIndex = (currentLightboxIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateLightbox();
+    }
+
+    // Touch swipe support on Mobile/Tablets
+    let touchStartX = 0;
+    let touchEndX = 0;
+    photoLightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    photoLightbox.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 45) {
+        nextLightbox();
+      } else if (touchEndX - touchStartX > 45) {
+        prevLightbox();
+      }
+    }, { passive: true });
+
+    // Keyboard navigation
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeLightbox();
-        closeModal();
+      if (!photoLightbox.classList.contains('pointer-events-none')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevLightbox();
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextLightbox();
       }
     });
 
 
     /* ===================================================
-       7. SMOOTH FLOATING HEARTS & SPARKLES BACKGROUND
+       7. INTERACTIVE BIRTHDAY CAKE & FLAME EXTINGUISHING
+       =================================================== */
+    let candleBlown = false;
+    const candleFlame = document.getElementById('candle-flame');
+    const candleHalo = document.getElementById('candle-halo');
+    const candleSmoke = document.getElementById('candle-smoke');
+    const blowBtn = document.getElementById('blow-candle-btn');
+
+    function blowCandle() {
+      if (candleBlown) {
+        relightCandle();
+        return;
+      }
+      candleBlown = true;
+
+      // Extinguish Flame & Smoke rise
+      candleFlame.classList.add('flame-extinguished');
+      candleHalo.classList.add('opacity-0');
+      candleSmoke.classList.add('smoke-active');
+
+      // Stop mic if listening
+      stopMicrophone();
+
+      // Confetti burst
+      shootConfetti(160);
+      setTimeout(() => shootConfetti(90), 400);
+
+      blowBtn.innerHTML = `<span>اتحققت الأمنية بإذن الله ✨</span><span>💖</span>`;
+      blowBtn.classList.remove('from-wine-700', 'via-wine-600', 'to-roseGold-deep');
+      blowBtn.classList.add('from-emerald-700', 'to-teal-800');
+
+      // Smooth scroll to Personal Letter
+      setTimeout(() => {
+        const letterEl = document.getElementById('letter-section');
+        if (letterEl) {
+          letterEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 1200);
+    }
+
+    function relightCandle() {
+      candleBlown = false;
+      candleFlame.classList.remove('flame-extinguished');
+      candleHalo.classList.remove('opacity-0');
+      candleSmoke.classList.remove('smoke-active');
+      blowBtn.innerHTML = `<span>اطفي الشمعة واتمني أمنية ✨</span><span>💨</span>`;
+      blowBtn.classList.remove('from-emerald-700', 'to-teal-800');
+      blowBtn.classList.add('from-wine-700', 'via-wine-600', 'to-roseGold-deep');
+    }
+
+    /* ===================================================
+       8. OPTIONAL MICROPHONE BLOW DETECTION
+       =================================================== */
+    let audioContext = null;
+    let micStream = null;
+    let analyser = null;
+    let micAnimationId = null;
+    let isListening = false;
+
+    const micBtn = document.getElementById('mic-blow-btn');
+    const micLabel = document.getElementById('mic-label');
+    const micFeedback = document.getElementById('mic-feedback');
+
+    async function toggleMicrophoneBlow() {
+      if (candleBlown) {
+        relightCandle();
+      }
+
+      if (isListening) {
+        stopMicrophone();
+        return;
+      }
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("متصفحك لا يدعم خاصية الاستماع للميكروفون، يمكنك الضغط على الشمعة مباشرة لإطفائها ✨");
+        return;
+      }
+
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.3;
+
+        const source = audioContext.createMediaStreamSource(micStream);
+        source.connect(analyser);
+
+        isListening = true;
+        micLabel.textContent = "جاري الاستماع.. انفخي الآن 💨";
+        micFeedback.classList.remove('hidden');
+        micBtn.classList.add('border-emerald-500', 'text-emerald-300');
+
+        detectBlow();
+      } catch (err) {
+        console.warn("Microphone access denied or error:", err);
+        alert("يرجى إعطاء الإذن بالمايكروفون حتى تتمكني من نفخ الشمعة بصوتك، أو اضغطي على الشمعة مباشرة ✨");
+        stopMicrophone();
+      }
+    }
+
+    function detectBlow() {
+      if (!isListening || !analyser) return;
+
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(dataArray);
+
+      // Low frequency energy represents breath puffs
+      let lowEnergy = 0;
+      const binsToCheck = Math.min(20, dataArray.length);
+      for (let i = 0; i < binsToCheck; i++) {
+        lowEnergy += dataArray[i];
+      }
+      const avgLow = lowEnergy / binsToCheck;
+
+      // Threshold for strong puff
+      if (avgLow > 55) {
+        blowCandle();
+        stopMicrophone();
+        return;
+      }
+
+      micAnimationId = requestAnimationFrame(detectBlow);
+    }
+
+    function stopMicrophone() {
+      isListening = false;
+      if (micAnimationId) cancelAnimationFrame(micAnimationId);
+      if (micStream) {
+        micStream.getTracks().forEach(track => track.stop());
+        micStream = null;
+      }
+      if (audioContext && audioContext.state !== 'closed') {
+        audioContext.close();
+        audioContext = null;
+      }
+      if (micLabel) micLabel.textContent = "اطفي بالنفخ في المايك";
+      if (micFeedback) micFeedback.classList.add('hidden');
+      if (micBtn) micBtn.classList.remove('border-emerald-500', 'text-emerald-300');
+    }
+
+
+    /* ===================================================
+       9. CINEMATIC SCROLL REVEALS & MOTION OBSERVER
+       =================================================== */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+
+
+    /* ===================================================
+       10. FLOATING ROSE PETALS & EMBERS (HTML5 CANVAS)
        =================================================== */
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
 
     let particles = [];
-    const PARTICLE_COUNT = 38;
+    const isMobileDevice = window.innerWidth < 768;
+    const PARTICLE_COUNT = isMobileDevice ? 20 : 36;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
     resizeCanvas();
 
-    class FloatingHeart {
+    class CinematicParticle {
       constructor() {
         this.reset(true);
       }
 
       reset(initial = false) {
         this.x = Math.random() * canvas.width;
-        this.y = initial ? Math.random() * canvas.height : canvas.height + 20;
-        this.size = Math.random() * 14 + 10;
-        this.speedY = Math.random() * 0.7 + 0.35;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.4 + 0.15;
+        this.y = initial ? Math.random() * canvas.height : canvas.height + 25;
+        this.size = Math.random() * 12 + 8;
+        this.speedY = Math.random() * 0.65 + 0.35;
+        this.speedX = (Math.random() - 0.5) * 0.45;
+        this.opacity = Math.random() * 0.45 + 0.15;
         this.sway = Math.random() * Math.PI * 2;
         this.swaySpeed = Math.random() * 0.02 + 0.01;
-        this.isSparkle = Math.random() > 0.65;
-        this.color = Math.random() > 0.5 ? '#ec4899' : '#f43f5e';
+        this.angle = Math.random() * Math.PI * 2;
+        this.angleSpeed = (Math.random() - 0.5) * 0.02;
+
+        // Particle types: 60% rose petals, 40% golden stardust embers
+        this.isStardust = Math.random() > 0.6;
+        this.color = Math.random() > 0.5 ? '#8c1648' : '#e0a384';
       }
 
       update() {
         this.y -= this.speedY;
         this.sway += this.swaySpeed;
-        this.x += Math.sin(this.sway) * 0.5 + this.speedX;
+        this.angle += this.angleSpeed;
+        this.x += Math.sin(this.sway) * 0.55 + this.speedX;
 
-        if (this.y < -30 || this.x < -30 || this.x > canvas.width + 30) {
+        if (this.y < -35 || this.x < -35 || this.x > canvas.width + 35) {
           this.reset();
         }
       }
@@ -1231,43 +1587,24 @@
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
 
-        if (this.isSparkle) {
-          // Draw Sparkle Star
-          ctx.fillStyle = '#fbbf24';
+        if (this.isStardust) {
+          // Golden Stardust Glow
+          ctx.fillStyle = '#f5d3c3';
+          ctx.shadowColor = '#e0a384';
+          ctx.shadowBlur = 8;
           ctx.beginPath();
-          const cx = this.x;
-          const cy = this.y;
-          const spikes = 4;
-          const outerR = this.size * 0.6;
-          const innerR = outerR * 0.3;
-          let rot = Math.PI / 2 * 3;
-          const step = Math.PI / spikes;
-
-          ctx.moveTo(cx, cy - outerR);
-          for (let i = 0; i < spikes; i++) {
-            let x = cx + Math.cos(rot) * outerR;
-            let y = cy + Math.sin(rot) * outerR;
-            ctx.lineTo(x, y);
-            rot += step;
-            x = cx + Math.cos(rot) * innerR;
-            y = cy + Math.sin(rot) * innerR;
-            ctx.lineTo(x, y);
-            rot += step;
-          }
-          ctx.lineTo(cx, cy - outerR);
-          ctx.closePath();
+          ctx.arc(0, 0, this.size * 0.22, 0, Math.PI * 2);
           ctx.fill();
         } else {
-          // Draw Smooth Heart Shape
+          // Romantic Rose Petal Shape
           ctx.fillStyle = this.color;
           ctx.beginPath();
-          const topCurveHeight = this.size * 0.3;
-          ctx.moveTo(this.x, this.y + topCurveHeight);
-          ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
-          ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 1.4, this.x, this.y + this.size);
-          ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 1.4, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
-          ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+          ctx.moveTo(0, -this.size * 0.7);
+          ctx.bezierCurveTo(this.size * 0.6, -this.size * 0.7, this.size * 0.6, this.size * 0.5, 0, this.size * 0.8);
+          ctx.bezierCurveTo(-this.size * 0.6, this.size * 0.5, -this.size * 0.6, -this.size * 0.7, 0, -this.size * 0.7);
           ctx.closePath();
           ctx.fill();
         }
@@ -1277,18 +1614,28 @@
     }
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push(new FloatingHeart());
+      particles.push(new CinematicParticle());
     }
 
+    let animFrameId = null;
     function animateBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let p of particles) {
         p.update();
         p.draw();
       }
-      requestAnimationFrame(animateBackground);
+      animFrameId = requestAnimationFrame(animateBackground);
     }
-    requestAnimationFrame(animateBackground);
+    animFrameId = requestAnimationFrame(animateBackground);
+
+    // Pause when tab is hidden to save battery & CPU
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+      } else {
+        animFrameId = requestAnimationFrame(animateBackground);
+      }
+    });
   </script>
 </body>
 </html>
