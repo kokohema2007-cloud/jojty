@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>jojty birthday — Preview Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #12020a;
+      background-image: 
+        radial-gradient(circle at 18% 25%, rgba(107, 17, 55, 0.6) 0%, transparent 55%),
+        radial-gradient(circle at 85% 75%, rgba(224, 163, 132, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(56, 9, 29, 0.85) 0%, transparent 100%),
+        linear-gradient(135deg, #0e0107 0%, #220413 50%, #0d0107 100%);
+      font-family: 'Cairo', sans-serif;
+      color: #faf6ee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 45px 75px;
+      position: relative;
+    }
+
+    /* Ambient luxury borders */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1.5px solid rgba(224, 163, 132, 0.38);
+      border-radius: 28px;
+      pointer-events: none;
+      box-shadow: inset 0 0 45px rgba(107, 17, 55, 0.35);
+    }
+    body::after {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border: 1px dashed rgba(224, 163, 132, 0.22);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    /* Text Column (Right in RTL) */
+    .text-col {
+      max-width: 580px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      background: rgba(224, 163, 132, 0.16);
+      border: 1.5px solid rgba(224, 163, 132, 0.45);
+      border-radius: 9999px;
+      color: #f5d3c3;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .title-en {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, #f5d3c3 50%, #e0a384 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 15px rgba(224, 163, 132, 0.35));
+    }
+
+    .title-ar {
+      font-family: 'Amiri', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #fffdfa;
+      line-height: 1.35;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .subtitle {
+      font-size: 21px;
+      font-weight: 600;
+      color: #e0a384;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    .footer-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #f5d3c3;
+      background: rgba(46, 6, 23, 0.65);
+      padding: 8px 22px;
+      border-radius: 9999px;
+      border: 1px solid rgba(224, 163, 132, 0.3);
+    }
+
+    /* Photos Column (Left in RTL) */
+    .photo-col {
+      z-index: 10;
+      position: relative;
+      width: 440px;
+      height: 490px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Primary Polaroid with 4.jpg */
+    .polaroid-1 {
+      position: absolute;
+      width: 325px;
+      background: #faf6ee;
+      padding: 14px 14px 28px 14px;
+      border-radius: 14px;
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(224, 163, 132, 0.35);
+      transform: rotate(-3.5deg) translateY(-6px);
+      z-index: 2;
+    }
+    .polaroid-1 img {
+      width: 100%;
+      height: 335px;
+      object-fit: cover;
+      object-position: center 20%;
+      border-radius: 8px;
+      display: block;
+    }
+    .polaroid-caption {
+      text-align: center;
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #38091d;
+      margin-top: 14px;
+    }
+
+    /* Secondary Layered Polaroid behind */
+    .polaroid-2 {
+      position: absolute;
+      width: 295px;
+      background: #f4ede0;
+      padding: 12px 12px 24px 12px;
+      border-radius: 12px;
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(224, 163, 132, 0.2);
+      transform: rotate(8deg) translate(35px, 20px);
+      z-index: 1;
+      opacity: 0.85;
+    }
+    .polaroid-2 img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Metallic rose gold wax seal */
+    .seal {
+      position: absolute;
+      top: -14px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      background: radial-gradient(circle, #8c1648 0%, #4e0c29 70%, #2a0615 100%);
+      border: 2px solid #e0a384;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+    }
+
+    /* Floating Sparkles */
+    .sparkle {
+      position: absolute;
+      color: #e0a384;
+      font-size: 24px;
+      opacity: 0.75;
+    }
+    .s1 { top: 45px; left: 95px; font-size: 32px; color: #f5d3c3; }
+    .s2 { bottom: 65px; left: 470px; font-size: 22px; }
+    .s3 { top: 75px; right: 540px; font-size: 28px; }
+    .s4 { bottom: 50px; right: 90px; font-size: 26px; }
+  </style>
+</head>
+<body>
+
+  <div class="sparkle s1">✨</div>
+  <div class="sparkle s2">🌸</div>
+  <div class="sparkle s3">✨</div>
+  <div class="sparkle s4">💖</div>
+
+  <!-- Right Text Area -->
+  <div class="text-col">
+    <div class="badge">
+      <span>✨</span>
+      <span>29 / 11 — يوم مميز في حياتي</span>
+      <span>✨</span>
+    </div>
+    
+    <div class="title-en">jojty birthday</div>
+    
+    <div class="title-ar">
+      كل سنة وأنتِ أجمل حاجة في حياتي 🎂💖
+    </div>
+    
+    <div class="subtitle">
+      أحلى أيام عمري بدأت معاكي.. ودائماً وإلى الأبد سوا ♾️✨
+    </div>
+
+    <div class="footer-pill">
+      <span>💌</span>
+      <span>هدية خاصة مصنوعة بكل حب</span>
+      <span>💖</span>
+    </div>
+  </div>
+
+  <!-- Left Photo Area with 4.jpg front and center -->
+  <div class="photo-col">
+    <!-- Secondary Behind Polaroid (1.jpg) -->
+    <div class="polaroid-2">
+      <img src="./1.jpg" alt="Memory">
+    </div>
+
+    <!-- Primary Front Polaroid (4.jpg - Her photo alone) -->
+    <div class="polaroid-1">
+      <div class="seal">❤️</div>
+      <img src="./4.jpg" alt="4.jpg - أجمل واحدة في الدنيا">
+      <div class="polaroid-caption">أجمل واحدة في الدنيا 💖✨</div>
+    </div>
+  </div>
+
+</body>
+</html>
