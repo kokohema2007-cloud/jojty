@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عيد ميلاد سعيد يا أحلى ما في حياتي 🎂💖 | 29/11</title>
+  <meta name="description" content="موقع مفاجأة عيد ميلاد رومانسي ومميز ليوم 29 نوفمبر">
+  <meta name="theme-color" content="#fbcfe8">
+
+  <!-- Google Fonts: Cairo & Amiri -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+            serif: ['Amiri', 'serif'],
+          },
+          colors: {
+            roseGold: '#ec4899',
+            deepRose: '#db2777',
+            darkPink: '#be185d',
+            softPink: '#fbcfe8',
+            blush: '#ffe4e6',
+          },
+          boxShadow: {
+            'glass': '0 8px 32px 0 rgba(236, 72, 153, 0.15)',
+            'glass-hover': '0 16px 40px 0 rgba(236, 72, 153, 0.25)',
+            'glow': '0 0 25px rgba(236, 72, 153, 0.5)',
+            'candle': '0 0 20px 8px rgba(251, 191, 36, 0.6)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* Custom Background & Scrollbar */
+    body {
+      background: linear-gradient(135deg, #ffe4e6 0%, #fbcfe8 50%, #fce7f3 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #831843;
+      overflow-x: hidden;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    /* Custom Glassmorphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 30px -5px rgba(236, 72, 153, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+
+    .glass-card-deep {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(251, 207, 232, 0.8);
+    }
+
+    /* 3D Flip Card Setup */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 1.5rem;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Typewriter Cursor */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.2em;
+      background-color: #db2777;
+      margin-right: 4px;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Candle Flame Animation */
+    .flame {
+      width: 16px;
+      height: 30px;
+      background: linear-gradient(to bottom, #fff7ed 0%, #fef08a 25%, #f97316 75%, #ef4444 100%);
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      animation: flicker 1.6s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.9)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.7));
+      transform-origin: center bottom;
+      transition: all 0.5s ease-out;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      20% { transform: scale(1.05, 0.95) rotate(2deg); }
+      40% { transform: scale(0.95, 1.05) rotate(-1deg); }
+      60% { transform: scale(1.03, 0.97) rotate(2deg); }
+      80% { transform: scale(0.98, 1.02) rotate(-2deg); }
+      100% { transform: scale(1.08, 0.92) rotate(1deg); }
+    }
+
+    .flame-extinguished {
+      opacity: 0 !important;
+      transform: scale(0.1) translateY(-10px) !important;
+      filter: blur(4px) !important;
+    }
+
+    /* Smoke Animation */
+    .smoke {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(156, 163, 175, 0.5);
+      border-radius: 50%;
+      bottom: 25px;
+      left: calc(50% - 4px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .smoke-puff {
+      animation: puff 1.4s ease-out forwards;
+    }
+    @keyframes puff {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); filter: blur(1px); }
+      50% { opacity: 0.5; transform: translateY(-25px) scale(2.5) translateX(6px); filter: blur(3px); }
+      100% { opacity: 0; transform: translateY(-50px) scale(4) translateX(-8px); filter: blur(5px); }
+    }
+
+    /* Polaroid Styles */
+    .polaroid-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform;
+    }
+    .polaroid-card:hover, .polaroid-card:focus-within {
+      transform: scale(1.06) rotate(0deg) !important;
+      z-index: 25;
+      box-shadow: 0 25px 35px -5px rgba(219, 39, 119, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Washi Tape Accent */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 24px;
+      background: rgba(251, 207, 232, 0.8);
+      border-left: 2px dashed rgba(244, 114, 182, 0.5);
+      border-right: 2px dashed rgba(244, 114, 182, 0.5);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      z-index: 5;
+    }
+
+    /* Music Visualizer Bars */
+    .music-bar {
+      width: 3px;
+      background: #db2777;
+      border-radius: 2px;
+      animation: soundBars 1s ease-in-out infinite alternate;
+    }
+    .music-bar:nth-child(1) { height: 14px; animation-delay: 0.1s; }
+    .music-bar:nth-child(2) { height: 20px; animation-delay: 0.3s; }
+    .music-bar:nth-child(3) { height: 10px; animation-delay: 0.5s; }
+    .music-bar:nth-child(4) { height: 17px; animation-delay: 0.2s; }
+
+    @keyframes soundBars {
+      0% { height: 4px; }
+      100% { height: 18px; }
+    }
+    .paused .music-bar {
+      animation: none !important;
+      height: 4px !important;
+    }
+
+    /* Smooth Pulse Animation */
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .pulse-heart {
+      animation: pulseHeart 1.5s ease-in-out infinite;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffe4e6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f472b6;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #db2777;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen text-slate-800 antialiased selection:bg-pink-300 selection:text-pink-900">
+
+  <!-- Background Canvas for Floating Hearts & Sparkles -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+  <!-- Background Music Audio Element -->
+  <audio id="bg-music" src="./song.mp3" loop preload="auto"></audio>
+
+  <!-- ==================================================== -->
+  <!-- 1. ENTRANCE LOCK SCREEN OVERLAY                      -->
+  <!-- ==================================================== -->
+  <div id="lock-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#ffe4e6] via-[#fbcfe8] to-[#fce7f3] transition-all duration-1000">
+    <div class="relative max-w-md w-full glass-card p-8 sm:p-10 rounded-3xl text-center shadow-glass border border-white/90">
+      
+      <!-- Romantic Animated Icon -->
+      <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full bg-pink-400/20 animate-ping"></div>
+        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-500/30 text-4xl">
+          🎁
+        </div>
+      </div>
+
+      <!-- Badge & Welcome Text -->
+      <div class="inline-block px-4 py-1.5 rounded-full bg-white/80 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
+        ✨ مفاجأة خاصة جداً من القلب ✨
+      </div>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-pink-900 mb-2 leading-tight">
+        أهلاً بجميلة قلبي 💖
+      </h2>
+      <p class="text-pink-800/80 text-sm sm:text-base mb-8 leading-relaxed font-medium">
+        كل ثانية، وكل كلمة، وكل ذكرى هنا اتعملت بكل حب عشانك إنتي وبس..
+      </p>
+
+      <!-- Glowing Entrance Button -->
+      <button id="enter-btn" class="w-full relative group px-6 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-lg sm:text-xl shadow-xl shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3">
+        <span>اضغطي هنا لفتح مفاجأتك 🎁</span>
+        <span class="inline-block transition-transform duration-300 group-hover:scale-125">✨</span>
+      </button>
+
+      <p class="text-xs text-pink-500/80 mt-4">
+        (تأكدي من تشغيل الصوت عشان تعيشي اللحظة 🎵)
+      </p>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- 2. FLOATING MUSIC PLAYER (Corner Widget)              -->
+  <!-- ==================================================== -->
+  <div id="music-player-widget" class="fixed bottom-5 left-5 z-40">
+    <button id="music-toggle-btn" class="glass-card-deep px-4 py-2.5 rounded-full shadow-lg shadow-pink-500/10 border border-pink-200/90 flex items-center gap-3 hover:scale-105 active:scale-95 transition-all duration-300 group select-none">
+      
+      <!-- Pulsing Heart Icon -->
+      <div id="player-heart" class="text-xl text-rose-500 pulse-heart transition-transform">
+        💖
+      </div>
+
+      <!-- Song Label & Artist -->
+      <div class="text-right">
+        <div class="text-xs font-bold text-pink-900 flex items-center gap-1.5">
+          <span>🎵 Adele - Lovesong</span>
+        </div>
+        <div id="music-status-text" class="text-[10px] text-pink-600 font-medium">
+          يعمل الآن 🎶
+        </div>
+      </div>
+
+      <!-- Equalizer Bars -->
+      <div id="music-equalizer" class="flex items-end gap-1 h-5 px-1">
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- MAIN WRAPPER -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-20 sm:space-y-32">
+
+    <!-- ==================================================== -->
+    <!-- 3. HERO SECTION                                      -->
+    <!-- ==================================================== -->
+    <header class="text-center pt-8 sm:pt-16 pb-6">
+      
+      <!-- Romantic Date Badge -->
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-card border border-pink-200 shadow-sm text-pink-700 text-sm sm:text-base font-semibold mb-6 hover:scale-105 transition-transform duration-300">
+        <span class="animate-spin text-pink-500" style="animation-duration: 4s;">✨</span>
+        <span>29 / 11 — يوم مميز في حياتي ✨</span>
+      </div>
+
+      <!-- Glowing Main Title -->
+      <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-pink-700 drop-shadow-sm mb-6 leading-tight tracking-wide">
+        كل سنة وأنتِ أجمل حاجة في حياتي 🎂💖
+      </h1>
+
+      <!-- Typewriter Subtitle Card -->
+      <div class="max-w-2xl mx-auto glass-card px-6 py-4 sm:py-5 rounded-2xl shadow-glass border border-white/80 min-h-[5.5rem] sm:min-h-[4.5rem] flex items-center justify-center">
+        <p class="text-base sm:text-xl md:text-2xl text-pink-900 font-semibold leading-relaxed">
+          <span id="typewriter-text"></span>
+          <span class="typewriter-cursor"></span>
+        </p>
+      </div>
+
+      <!-- Scroll Down Cute Indicator -->
+      <div class="mt-12 flex justify-center">
+        <a href="#timer-section" class="inline-flex flex-col items-center text-pink-600 hover:text-pink-800 transition-colors duration-300 text-xs sm:text-sm font-medium">
+          <span>اكتشفي الباقي تحت</span>
+          <svg class="w-5 h-5 animate-bounce mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ==================================================== -->
+    <!-- 4. 29/11 INTERACTIVE TIMER SECTION                   -->
+    <!-- ==================================================== -->
+    <section id="timer-section" class="scroll-mt-24">
+      <div class="max-w-3xl mx-auto glass-card rounded-3xl p-6 sm:p-10 shadow-glass border border-white/90">
+        
+        <!-- Toggle Switch Tabs -->
+        <div class="flex justify-center mb-8">
+          <div class="inline-flex p-1.5 rounded-2xl bg-pink-100/80 border border-pink-200/90 shadow-inner">
+            <button id="tab-countdown" class="px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm" onclick="switchTimerTab('countdown')">
+              العد التنازلي ليوم 29/11 🎂⏳
+            </button>
+            <button id="tab-anniversary" class="px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800" onclick="switchTimerTab('anniversary')">
+              بقالنا قد إيه سوا ♾️💖
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Title & Subheading -->
+        <div class="text-center mb-8">
+          <h2 id="timer-heading" class="font-serif text-2xl sm:text-3xl font-bold text-pink-900 mb-2">
+            العد التنازلي ليوم ميلادك السعيد 🎉
+          </h2>
+          <p id="timer-subtext" class="text-sm sm:text-base text-pink-700/80 font-medium">
+            كل ثانية بتقربنا لليوم اللي اتولدت فيه روحي ونور حياتي ✨
+          </p>
+        </div>
+
+        <!-- Timer Display Boxes (4 Units) -->
+        <div id="timer-grid" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto">
+          
+          <!-- Days Box -->
+          <div class="glass-card-deep rounded-2xl p-2 sm:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
+            <span id="timer-days" class="font-bold text-xl sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
+            <span class="text-xs sm:text-sm font-semibold text-pink-800 mt-1">يوم</span>
+          </div>
+
+          <!-- Hours Box -->
+          <div class="glass-card-deep rounded-2xl p-2 sm:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
+            <span id="timer-hours" class="font-bold text-xl sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
+            <span class="text-xs sm:text-sm font-semibold text-pink-800 mt-1">ساعة</span>
+          </div>
+
+          <!-- Minutes Box -->
+          <div class="glass-card-deep rounded-2xl p-2 sm:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
+            <span id="timer-minutes" class="font-bold text-xl sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
+            <span class="text-xs sm:text-sm font-semibold text-pink-800 mt-1">دقيقة</span>
+          </div>
+
+          <!-- Seconds Box -->
+          <div class="glass-card-deep rounded-2xl p-2 sm:p-5 text-center border border-pink-200 shadow-sm flex flex-col justify-center">
+            <span id="timer-seconds" class="font-bold text-xl sm:text-3xl md:text-5xl text-pink-600 font-sans tracking-tight">00</span>
+            <span class="text-xs sm:text-sm font-semibold text-pink-800 mt-1">ثانية</span>
+          </div>
+
+        </div>
+
+        <!-- Special Birthday Message Alert (Hidden until date is reached) -->
+        <div id="birthday-reached-message" class="hidden text-center py-6 px-4 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white rounded-2xl shadow-lg mt-4 animate-bounce">
+          <p class="font-serif text-xl sm:text-2xl font-bold">
+            النهارده 29/11.. عيد ميلاد أجمل واحدة في الدنيا! 🎉💖
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- 5. POLAROID PHOTO GALLERY                            -->
+    <!-- ==================================================== -->
+    <section id="gallery-section" class="scroll-mt-24">
+      <div class="text-center mb-12 sm:mb-16">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
+          ألبوم الذكريات 📸
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-pink-800 mb-3">
+          أحلى ذكرياتنا سوا 📸
+        </h2>
+        <p class="text-pink-700/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+          كل صورة هنا مش مجرد لقطة عادية.. دي لحظة محفورة في قلبي بتفاصيلها وضحكتك فيها ✨
+        </p>
+      </div>
+
+      <!-- 6 Polaroid Photo Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 pt-4 items-start">
+        
+        <!-- Polaroid Card 1 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-2 cursor-pointer transition-all duration-300" onclick="openLightbox('./1.jpg', 'اليوم ده كان عادي لحد ما شوفتك، بقى من أحلى ذكرياتي ❤️')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./1.jpg" alt="ذكرى جميلة 1" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '1.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              اليوم ده كان عادي لحد ما شوفتك، بقى من أحلى ذكرياتي ❤️
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 2 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-3 cursor-pointer transition-all duration-300" onclick="openLightbox('./2.jpg', 'ضحكتك في الصورة دي قادرة تنسيني أي تعب في الدنيا ✨')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./2.jpg" alt="ذكرى جميلة 2" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '2.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              ضحكتك في الصورة دي قادرة تنسيني أي تعب في الدنيا ✨
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 3 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-3 cursor-pointer transition-all duration-300" onclick="openLightbox('./3.jpg', 'أحلى وقت في يومي هو الوقت اللي بكون فيه معاكي مهما كنا بنعمل إيه 🥰')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./3.jpg" alt="ذكرى جميلة 3" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '3.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              أحلى وقت في يومي هو الوقت اللي بكون فيه معاكي مهما كنا بنعمل إيه 🥰
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 4 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-2 cursor-pointer transition-all duration-300" onclick="openLightbox('./4.jpg', 'بصي لنفسك هنا.. عرفتي ليه أنا بحبك أوي كده؟ 🩷')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./4.jpg" alt="ذكرى جميلة 4" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '4.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              بصي لنفسك هنا.. عرفتي ليه أنا بحبك أوي كده؟ 🩷
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 5 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 -rotate-1 cursor-pointer transition-all duration-300" onclick="openLightbox('./5.jpg', 'ذكرى حلوة من أيام كتير جاية لسه هنعيشها سوا إن شاء الله ♾️')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./5.jpg" alt="ذكرى جميلة 5" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '5.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              ذكرى حلوة من أيام كتير جاية لسه هنعيشها سوا إن شاء الله ♾️
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 6 -->
+        <div class="polaroid-card relative bg-white p-3.5 sm:p-4 pb-6 rounded-2xl shadow-xl border border-pink-100/90 rotate-3 cursor-pointer transition-all duration-300" onclick="openLightbox('./6.jpg', 'ملامحك هنا ليها مكان خاص أوي في قلبي 💌')">
+          <div class="washi-tape"></div>
+          <div class="rounded-xl overflow-hidden bg-pink-50/40 mb-4 shadow-sm flex items-center justify-center">
+            <img src="./6.jpg" alt="ذكرى جميلة 6" class="w-full h-auto block object-contain rounded-xl" onerror="handleImageError(this, '6.jpg')">
+          </div>
+          <div class="text-center px-2">
+            <p class="font-serif text-base sm:text-lg text-pink-900 leading-relaxed font-bold">
+              ملامحك هنا ليها مكان خاص أوي في قلبي 💌
+            </p>
+            <span class="inline-block text-[11px] text-pink-400 mt-1 font-medium">(اضغطي لتكبير الصورة 🔍)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- 6. "WHY I LOVE YOU" 3D FLIP CARDS                    -->
+    <!-- ==================================================== -->
+    <section id="flip-cards-section" class="scroll-mt-24">
+      <div class="text-center mb-12 sm:mb-16">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-3 shadow-sm">
+          كلام من القلب 💖
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-pink-800 mb-3">
+          رسايل صغيرة من قلبي ليكي 💌
+        </h2>
+        <p class="text-pink-700/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+          اضغطي على أي كارت عشان يلف وتشوفي الكلام المستخبي وراه ✨
+        </p>
+      </div>
+
+      <!-- 4 3D Flip Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Flip Card 1 -->
+        <div class="flip-card perspective-1000 h-80" onclick="toggleFlip(this)">
+          <div class="flip-card-inner">
+            <!-- Front -->
+            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
+              <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl text-pink-600 shadow-sm">
+                💭
+              </div>
+              <div class="my-auto">
+                <h3 class="font-serif text-2xl font-bold text-pink-900 mb-2">ليه بحبك؟ 💭</h3>
+                <p class="text-xs text-pink-600 font-medium">سؤال إجابته ملهاش نهاية في قلبي..</p>
+              </div>
+              <span class="text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+                <span>اضغطي لقراءة الرسالة</span>
+                <span>👆</span>
+              </span>
+            </div>
+            <!-- Back -->
+            <div class="flip-card-back bg-gradient-to-br from-pink-600 via-rose-600 to-pink-700 text-white p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
+              <div class="text-right text-xs opacity-70">💌 رسالة #1</div>
+              <p class="font-serif text-base sm:text-lg leading-relaxed font-bold my-auto">
+                عشان معاكي بكون على طبيعتي من غير ما أحسبها، وعشان حنيتك وطيبة قلبك اللي مفيش زيهم في الدنيا.
+              </p>
+              <div class="text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flip Card 2 -->
+        <div class="flip-card perspective-1000 h-80" onclick="toggleFlip(this)">
+          <div class="flip-card-inner">
+            <!-- Front -->
+            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
+              <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl text-pink-600 shadow-sm">
+                🥺
+              </div>
+              <div class="my-auto">
+                <h3 class="font-serif text-2xl font-bold text-pink-900 mb-2">افتحيه لما تكوني زعلانة 🥺</h3>
+                <p class="text-xs text-pink-600 font-medium">عشان أفكرك دايماً إن زعلك غالي عندي..</p>
+              </div>
+              <span class="text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+                <span>اضغطي لقراءة الرسالة</span>
+                <span>👆</span>
+              </span>
+            </div>
+            <!-- Back -->
+            <div class="flip-card-back bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 text-white p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
+              <div class="text-right text-xs opacity-70">💌 رسالة #2</div>
+              <p class="font-serif text-base sm:text-lg leading-relaxed font-bold my-auto">
+                مفيش أي حاجة في الدنيا تستاهل تضيع ضحكتك الحلوة دي.. حقك عليا لو زعلانة مني، وأنا جنبك في أي حاجة مضايقاكي لحد ما تروقي.
+              </p>
+              <div class="text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flip Card 3 -->
+        <div class="flip-card perspective-1000 h-80" onclick="toggleFlip(this)">
+          <div class="flip-card-inner">
+            <!-- Front -->
+            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
+              <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl text-pink-600 shadow-sm">
+                ✨
+              </div>
+              <div class="my-auto">
+                <h3 class="font-serif text-2xl font-bold text-pink-900 mb-2">أكتر حاجة بحبها فيكي ✨</h3>
+                <p class="text-xs text-pink-600 font-medium">كل حاجة فيكي مميزة، بس دي بالذات غير..</p>
+              </div>
+              <span class="text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+                <span>اضغطي لقراءة الرسالة</span>
+                <span>👆</span>
+              </span>
+            </div>
+            <!-- Back -->
+            <div class="flip-card-back bg-gradient-to-br from-pink-600 via-rose-600 to-pink-700 text-white p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
+              <div class="text-right text-xs opacity-70">💌 رسالة #3</div>
+              <p class="font-serif text-base sm:text-lg leading-relaxed font-bold my-auto">
+                تفاصيلك الصغيرة، طريقتك وإنتي بتحكيلي يومك، ولمعة عينك لما بتفرحي بحاجة بسيطة.
+              </p>
+              <div class="text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flip Card 4 -->
+        <div class="flip-card perspective-1000 h-80" onclick="toggleFlip(this)">
+          <div class="flip-card-inner">
+            <!-- Front -->
+            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-between text-center border-2 border-pink-200/80 shadow-glass hover:border-pink-400 transition-colors">
+              <div class="w-12 h-12 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl text-pink-600 shadow-sm">
+                💍
+              </div>
+              <div class="my-auto">
+                <h3 class="font-serif text-2xl font-bold text-pink-900 mb-2">وعد ليكي 💍</h3>
+                <p class="text-xs text-pink-600 font-medium">عهد هيفضل في قلبي مهما مر الوقت..</p>
+              </div>
+              <span class="text-xs font-bold text-pink-500 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 flex items-center gap-1">
+                <span>اضغطي لقراءة الرسالة</span>
+                <span>👆</span>
+              </span>
+            </div>
+            <!-- Back -->
+            <div class="flip-card-back bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 text-white p-6 flex flex-col justify-between text-center rounded-3xl shadow-xl">
+              <div class="text-right text-xs opacity-70">💌 رسالة #4</div>
+              <p class="font-serif text-base sm:text-lg leading-relaxed font-bold my-auto">
+                أوعدك إني هفضل دايماً سندك، وأول واحد يفرح لفرحك، واللي هيفضل يختارك في كل يوم جديد.
+              </p>
+              <div class="text-xs opacity-80 font-medium">اضغطي للرجوع 🔄</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- 7. INTERACTIVE BIRTHDAY CAKE & FINAL LETTER MODAL    -->
+    <!-- ==================================================== -->
+    <section id="cake-section" class="scroll-mt-24 text-center">
+      <div class="max-w-2xl mx-auto glass-card rounded-3xl p-8 sm:p-12 shadow-glass border border-white/90 relative overflow-hidden">
+        
+        <div class="inline-block px-4 py-1.5 rounded-full bg-white/70 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-4 shadow-sm">
+          تمني أمنية من قلبك 🎂✨
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-pink-900 mb-3">
+          تورتة عيد ميلادك 🎂
+        </h2>
+        <p class="text-pink-700/80 text-sm sm:text-base font-medium mb-10 max-w-md mx-auto">
+          غمضي عينك، تمني أجمل أمنية لنفسك، واطفي الشمعة عشان تفتحي رسالتي الأخيرة ليكي 💖
+        </p>
+
+        <!-- Cute Birthday Cake Graphics (SVG & CSS Candle) -->
+        <div class="relative w-64 h-56 mx-auto mb-10 flex flex-col items-center justify-end select-none">
+          
+          <!-- Candle Assembly -->
+          <div class="relative flex flex-col items-center z-20 mb-[-2px]">
+            <!-- Flame & Smoke -->
+            <div class="relative w-6 h-10 flex justify-center items-end">
+              <div id="candle-flame" class="flame"></div>
+              <div id="candle-smoke" class="smoke"></div>
+            </div>
+            <!-- Candle Wick -->
+            <div class="w-1 h-3 bg-stone-700 rounded-t-sm"></div>
+            <!-- Candle Body -->
+            <div class="w-4 h-14 bg-gradient-to-r from-pink-200 via-rose-300 to-pink-200 rounded-t-md shadow-sm border border-pink-300/60 relative overflow-hidden">
+              <!-- Stripes on candle -->
+              <div class="absolute inset-0 opacity-40 bg-[repeating-linear-gradient(45deg,#fff,#fff_4px,#f43f5e_4px,#f43f5e_8px)]"></div>
+            </div>
+          </div>
+
+          <!-- Cake Tiers (SVG for pristine vector beauty) -->
+          <svg viewBox="0 0 240 140" class="w-full h-auto drop-shadow-xl overflow-visible">
+            <defs>
+              <linearGradient id="cakeFrosting" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff1f2" />
+                <stop offset="100%" stop-color="#fbcfe8" />
+              </linearGradient>
+              <linearGradient id="cakeBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fda4af" />
+                <stop offset="100%" stop-color="#f43f5e" />
+              </linearGradient>
+              <linearGradient id="plateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="100%" stop-color="#e2e8f0" />
+              </linearGradient>
+            </defs>
+
+            <!-- Cake Plate -->
+            <ellipse cx="120" cy="132" rx="110" ry="12" fill="url(#plateGrad)" stroke="#cbd5e1" stroke-width="2" />
+
+            <!-- Bottom Tier Body -->
+            <path d="M 40,85 Q 120,105 200,85 L 200,120 Q 120,140 40,120 Z" fill="url(#cakeBody)" />
+            <!-- Bottom Tier Top -->
+            <ellipse cx="120" cy="85" rx="80" ry="20" fill="url(#cakeFrosting)" stroke="#f472b6" stroke-width="1.5" />
+            <!-- Bottom Tier Icing Drips -->
+            <path d="M 40,85 Q 50,102 60,88 Q 70,106 80,89 Q 95,110 110,88 Q 125,108 140,89 Q 155,107 170,88 Q 185,105 200,85" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+
+            <!-- Top Tier Body -->
+            <path d="M 65,45 Q 120,62 175,45 L 175,75 Q 120,92 65,75 Z" fill="url(#cakeBody)" />
+            <!-- Top Tier Top -->
+            <ellipse cx="120" cy="45" rx="55" ry="15" fill="url(#cakeFrosting)" stroke="#f472b6" stroke-width="1.5" />
+            <!-- Top Tier Icing Drips -->
+            <path d="M 65,45 Q 75,58 85,47 Q 95,62 105,48 Q 120,64 135,47 Q 150,62 165,46 L 175,45" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" />
+
+            <!-- Strawberries & Cherries on top -->
+            <circle cx="95" cy="42" r="5" fill="#e11d48" />
+            <circle cx="145" cy="42" r="5" fill="#e11d48" />
+            <circle cx="120" cy="52" r="4.5" fill="#e11d48" />
+
+            <!-- Decorative Sprinkles -->
+            <rect x="75" y="80" width="6" height="2" rx="1" fill="#ec4899" transform="rotate(15 75 80)" />
+            <rect x="110" y="98" width="6" height="2" rx="1" fill="#f59e0b" transform="rotate(-20 110 98)" />
+            <rect x="150" y="82" width="6" height="2" rx="1" fill="#3b82f6" transform="rotate(45 150 82)" />
+            <rect x="175" y="95" width="6" height="2" rx="1" fill="#10b981" transform="rotate(-15 175 95)" />
+            <rect x="90" y="60" width="5" height="2" rx="1" fill="#ec4899" transform="rotate(-10 90 60)" />
+            <rect x="140" y="62" width="5" height="2" rx="1" fill="#f59e0b" transform="rotate(30 140 62)" />
+          </svg>
+        </div>
+
+        <!-- Blow Candle Button -->
+        <div class="relative z-10">
+          <button id="blow-candle-btn" onclick="blowCandle()" class="px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-lg sm:text-xl shadow-xl shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-3">
+            <span>اطفي الشمعة واتمني أمنية ✨</span>
+            <span>💨</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER NOTE -->
+    <footer class="text-center pt-8 pb-16 text-pink-800/70 text-sm font-medium">
+      <p class="mb-2">كل سنة وإنتي حبيبتي وضحكة أيامي 💖 29 / 11</p>
+      <p class="text-xs text-pink-600/70">صُنع بكل حب خصيصاً لأجمل واحدة في الدنيا ✨</p>
+    </footer>
+
+  </main>
+
+  <!-- ==================================================== -->
+  <!-- FINAL LOVE LETTER MODAL (Glassmorphism Modal)        -->
+  <!-- ==================================================== -->
+  <div id="love-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pink-950/40 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-700">
+    <div class="relative max-w-2xl w-full glass-card-deep p-6 sm:p-10 rounded-3xl shadow-2xl border border-white/90 text-center max-h-[90vh] overflow-y-auto transform scale-95 transition-all duration-500" id="love-modal-card">
+      
+      <!-- Top Wax Seal Stamp -->
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-3xl shadow-lg shadow-pink-500/30 text-white">
+        💌
+      </div>
+
+      <!-- Modal Badge -->
+      <div class="inline-block px-4 py-1.5 rounded-full bg-pink-100 border border-pink-200 text-pink-700 text-xs sm:text-sm font-semibold mb-6">
+        رسالة من أعماق قلبي ✨
+      </div>
+
+      <!-- Love Letter Content -->
+      <div class="text-right space-y-4 font-serif text-base sm:text-lg text-pink-950 leading-relaxed sm:leading-loose">
+        <p class="font-bold text-lg sm:text-xl text-pink-700">
+          كل سنة وإنتي طيبة يا أحلى وأغلى إنسانة في حياتي كلها..
+        </p>
+        <p>
+          حبيت أعملك حاجة بسيطة، بس معمولة مخصوص عشانك لوحدك، تفضل ذكرى حلوة بينا كل ما تفتحيها تفتكري إنتي غالية عندي إزاي.
+        </p>
+        <p>
+          من يوم ما دخلتي حياتي وإنتي غيرتي فيها حاجات كتير للأحسن، وجودك لوحده بيهون عليا أي يوم صعب، وكلامك وضحكتك هما الراحة اللي بدور عليها في آخر كل يوم.
+        </p>
+        <p>
+          في عيد ميلادك النهارده، بتمنالك سنة جديدة شبه قلبك الأبيض، مليانة فرحة ونجاح وراحة بال، وتحققي فيها كل حاجة بتتمنيها.. وبتمنى لنفسي إن كل سنينك الجاية نحتفل بيها وإحنا مع بعض.
+        </p>
+        <p class="font-bold text-lg sm:text-xl text-pink-700 pt-2">
+          كل سنة وإنتي حبيبتي، وصحبتي، وأجمل حاجة حصلتلي.. بحبك أوي 💖
+        </p>
+      </div>
+
+      <!-- Modal Buttons -->
+      <div class="mt-8 pt-6 border-t border-pink-200/80 flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="closeModal()" class="px-8 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all">
+          أحبك من كل قلبي 💖
+        </button>
+        <button onclick="relightCandle()" class="px-6 py-3 rounded-xl bg-white text-pink-700 border border-pink-200 font-bold text-sm sm:text-base hover:bg-pink-50 transition-all">
+          إعادة إشعال الشمعة 🕯️
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- PHOTO LIGHTBOX MODAL (Full Uncropped Image View)     -->
+  <!-- ==================================================== -->
+  <div id="photo-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-pink-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300" onclick="closeLightbox()">
+    <div class="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-12 left-0 sm:left-2 text-white bg-white/20 hover:bg-white/40 rounded-full w-10 h-10 flex items-center justify-center text-xl transition-all shadow-lg" title="إغلاق">✕</button>
+      <div class="bg-white p-2 sm:p-3 rounded-2xl shadow-2xl border border-white/80 max-h-[80vh] flex flex-col items-center justify-center overflow-hidden">
+        <img id="lightbox-img" src="" alt="صورة كاملة" class="max-h-[72vh] w-auto max-w-full rounded-xl object-contain" />
+      </div>
+      <p id="lightbox-caption" class="text-white text-center font-serif text-base sm:text-xl font-bold mt-3 px-6 py-2.5 rounded-2xl bg-black/50 backdrop-blur-md border border-white/20 max-w-xl"></p>
+    </div>
+  </div>
+
+
+  <!-- ==================================================== -->
+  <!-- JAVASCRIPT LOGIC                                     -->
+  <!-- ==================================================== -->
+  <script>
+    /* ===================================================
+       1. ENTRANCE SCREEN & AUDIO MANAGEMENT
+       =================================================== */
+    const bgMusic = document.getElementById('bg-music');
+    const enterBtn = document.getElementById('enter-btn');
+    const lockScreen = document.getElementById('lock-screen');
+    const musicToggleBtn = document.getElementById('music-toggle-btn');
+    const musicStatusText = document.getElementById('music-status-text');
+    const musicEqualizer = document.getElementById('music-equalizer');
+    const playerHeart = document.getElementById('player-heart');
+
+    // Confetti Cannon for celebrations
+    function shootConfetti(particleCount = 100) {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: particleCount,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#ec4899', '#db2777', '#f43f5e', '#fbbf24', '#fbcfe8', '#ffffff']
+        });
+      }
+    }
+
+    // Update Floating Music Player UI
+    function updateMusicPlayerUI(isPlaying) {
+      if (isPlaying) {
+        musicStatusText.textContent = "يعمل الآن 🎶";
+        musicEqualizer.classList.remove('paused');
+        playerHeart.classList.add('pulse-heart');
+      } else {
+        musicStatusText.textContent = "متوقف مؤقتاً ⏸️";
+        musicEqualizer.classList.add('paused');
+        playerHeart.classList.remove('pulse-heart');
+      }
+    }
+
+    // Entrance button click handler
+    enterBtn.addEventListener('click', () => {
+      // 1. Confetti burst
+      shootConfetti(120);
+
+      // 2. Play song at second 28 (Adele's singing start)
+      if (bgMusic) {
+        try {
+          bgMusic.currentTime = 28;
+        } catch (e) {
+          console.log("Could not set currentTime yet:", e);
+        }
+
+        const ensureTime28 = () => {
+          try { bgMusic.currentTime = 28; } catch(e){}
+        };
+
+        if (bgMusic.readyState < 1) {
+          bgMusic.addEventListener('loadedmetadata', ensureTime28, { once: true });
+          bgMusic.addEventListener('canplay', ensureTime28, { once: true });
+        }
+        
+        bgMusic.play().then(() => {
+          try { bgMusic.currentTime = 28; } catch(e){}
+          updateMusicPlayerUI(true);
+        }).catch(err => {
+          console.warn("Audio autoplay blocked or audio file missing:", err);
+          updateMusicPlayerUI(false);
+        });
+      }
+
+      // 3. Smooth fade out overlay
+      lockScreen.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        lockScreen.style.display = 'none';
+        startTypewriter();
+      }, 1000);
+    });
+
+    // Floating Player Play/Pause Toggle
+    musicToggleBtn.addEventListener('click', () => {
+      if (!bgMusic) return;
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+          updateMusicPlayerUI(true);
+        }).catch(e => console.warn(e));
+      } else {
+        bgMusic.pause();
+        updateMusicPlayerUI(false);
+      }
+    });
+
+
+    /* ===================================================
+       2. HERO TYPEWRITER EFFECT
+       =================================================== */
+    const typewriterElement = document.getElementById('typewriter-text');
+    const phrases = [
+      "كل سنة وإنتي ضحكتي وأماني وأحلى صدفة في عمري ✨",
+      "النهارده مش عيد ميلادك لوحدك، ده عيد ميلاد أحلى أيام حياتي 💖",
+      "ربنا يخليكي ليا وميحرمنيش من وجودك ولا من ضحكتك أبداً 🌸",
+      "معاكي كل الأيام عيد، بس النهارده اليوم اللي نور الدنيا بيكي 🎂"
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typewriterStarted = false;
+
+    function startTypewriter() {
+      if (typewriterStarted) return;
+      typewriterStarted = true;
+      typeNextChar();
+    }
+
+    function typeNextChar() {
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (!isDeleting) {
+        typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(typeNextChar, 2500); // Wait 2.5s before deleting
+          return;
+        }
+        setTimeout(typeNextChar, 60);
+      } else {
+        typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeNextChar, 500);
+          return;
+        }
+        setTimeout(typeNextChar, 30);
+      }
+    }
+
+
+    /* ===================================================
+       3. 29/11 INTERACTIVE TIMER & ANNIVERSARY
+       =================================================== */
+    // عدل سنة البداية هنا لو حابب (12 سبتمبر 2023 الساعة 1:00 صباحاً)
+    const startDate = new Date("2023-09-12T01:00:00");
+    const targetBirthdayDate = new Date("2026-11-29T00:00:00");
+
+    let currentTimerMode = 'countdown'; // 'countdown' or 'anniversary'
+
+    const tabCountdown = document.getElementById('tab-countdown');
+    const tabAnniversary = document.getElementById('tab-anniversary');
+    const timerHeading = document.getElementById('timer-heading');
+    const timerSubtext = document.getElementById('timer-subtext');
+    const timerGrid = document.getElementById('timer-grid');
+    const birthdayReachedMsg = document.getElementById('birthday-reached-message');
+
+    const daysEl = document.getElementById('timer-days');
+    const hoursEl = document.getElementById('timer-hours');
+    const minutesEl = document.getElementById('timer-minutes');
+    const secondsEl = document.getElementById('timer-seconds');
+
+    function switchTimerTab(mode) {
+      currentTimerMode = mode;
+      if (mode === 'countdown') {
+        tabCountdown.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm";
+        tabAnniversary.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800";
+        timerHeading.textContent = "العد التنازلي ليوم ميلادك السعيد 🎉";
+        timerSubtext.textContent = "كل ثانية بتقربنا لليوم اللي اتولدت فيه روحي ونور حياتي ✨";
+      } else {
+        tabAnniversary.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 bg-white text-pink-700 shadow-sm";
+        tabCountdown.className = "px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 text-pink-600 hover:text-pink-800";
+        timerHeading.textContent = "بقالنا قد إيه سوا ♾️💖";
+        timerSubtext.textContent = "من يوم 12 / 9 / 2023 الساعة 1:00 صباحاً.. وكل لحظة بتعدي بحبك فيها أكتر ❤️";
+      }
+      updateTimer();
+    }
+
+    function updateTimer() {
+      const now = new Date();
+
+      if (currentTimerMode === 'countdown') {
+        const diff = targetBirthdayDate - now;
+
+        if (diff <= 0) {
+          // Date reached or passed!
+          timerGrid.classList.add('hidden');
+          birthdayReachedMsg.classList.remove('hidden');
+          return;
+        } else {
+          timerGrid.classList.remove('hidden');
+          birthdayReachedMsg.classList.add('hidden');
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+
+          daysEl.textContent = String(days).padStart(2, '0');
+          hoursEl.textContent = String(hours).padStart(2, '0');
+          minutesEl.textContent = String(minutes).padStart(2, '0');
+          secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+      } else {
+        // Count Up from startDate
+        timerGrid.classList.remove('hidden');
+        birthdayReachedMsg.classList.add('hidden');
+
+        const elapsed = Math.max(0, now - startDate);
+        const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+        const seconds = Math.floor((elapsed / 1000) % 60);
+
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+      }
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+
+    /* ===================================================
+       4. POLAROID ERROR FALLBACK PLACEHOLDER
+       =================================================== */
+    function handleImageError(img, filename) {
+      img.onerror = null;
+      // High quality romantic SVG placeholder with filename guidance
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
+          <defs>
+            <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff1f2" />
+              <stop offset="50%" stop-color="#fce7f3" />
+              <stop offset="100%" stop-color="#fbcfe8" />
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#bgG)"/>
+          <circle cx="300" cy="190" r="75" fill="#f472b6" opacity="0.25"/>
+          <path d="M300,165 C285,135 245,135 230,160 C205,200 300,265 300,265 C300,265 395,200 370,160 C355,135 315,135 300,165 Z" fill="#ec4899"/>
+          <text x="300" y="320" font-family="'Cairo', sans-serif" font-size="22" font-weight="bold" fill="#be185d" text-anchor="middle">صورة ${filename}</text>
+          <text x="300" y="355" font-family="'Cairo', sans-serif" font-size="15" fill="#db2777" text-anchor="middle">أحلى ذكرياتنا سوا 💖</text>
+        </svg>
+      `;
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+
+
+    /* ===================================================
+       5. 3D FLIP CARDS INTERACTION
+       =================================================== */
+    function toggleFlip(cardElement) {
+      cardElement.classList.toggle('flipped');
+    }
+
+
+    /* ===================================================
+       6. INTERACTIVE BIRTHDAY CAKE & MODAL
+       =================================================== */
+    let candleBlown = false;
+    const candleFlame = document.getElementById('candle-flame');
+    const candleSmoke = document.getElementById('candle-smoke');
+    const loveModal = document.getElementById('love-modal');
+    const loveModalCard = document.getElementById('love-modal-card');
+    const blowBtn = document.getElementById('blow-candle-btn');
+
+    function blowCandle() {
+      if (candleBlown) {
+        openModal();
+        return;
+      }
+      candleBlown = true;
+
+      // Extinguish flame with animation
+      candleFlame.classList.add('flame-extinguished');
+      candleSmoke.classList.add('smoke-puff');
+
+      // Blast celebratory confetti & hearts
+      shootConfetti(140);
+      setTimeout(() => shootConfetti(90), 400);
+
+      blowBtn.innerHTML = `<span>اتحققت الأمنية بإذن الله ✨</span><span>💖</span>`;
+      blowBtn.classList.remove('from-pink-500', 'via-rose-500', 'to-pink-600');
+      blowBtn.classList.add('from-emerald-500', 'to-teal-600');
+
+      // Pop open love letter modal
+      setTimeout(() => {
+        openModal();
+      }, 900);
+    }
+
+    function openModal() {
+      loveModal.classList.remove('opacity-0', 'pointer-events-none');
+      loveModalCard.classList.remove('scale-95');
+      loveModalCard.classList.add('scale-100');
+    }
+
+    function closeModal() {
+      loveModal.classList.add('opacity-0', 'pointer-events-none');
+      loveModalCard.classList.remove('scale-100');
+      loveModalCard.classList.add('scale-95');
+    }
+
+    function relightCandle() {
+      closeModal();
+      candleBlown = false;
+      candleFlame.classList.remove('flame-extinguished');
+      candleSmoke.classList.remove('smoke-puff');
+      blowBtn.innerHTML = `<span>اطفي الشمعة واتمني أمنية ✨</span><span>💨</span>`;
+      blowBtn.classList.remove('from-emerald-500', 'to-teal-600');
+      blowBtn.classList.add('from-pink-500', 'via-rose-500', 'to-pink-600');
+    }
+
+    // Close modal when clicking outside card
+    loveModal.addEventListener('click', (e) => {
+      if (e.target === loveModal) {
+        closeModal();
+      }
+    });
+
+    /* ===================================================
+       PHOTO LIGHTBOX FUNCTIONALITY
+       =================================================== */
+    const photoLightbox = document.getElementById('photo-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    function openLightbox(src, caption) {
+      if (!photoLightbox || !lightboxImg || !lightboxCaption) return;
+      lightboxImg.src = src;
+      lightboxCaption.textContent = caption;
+      photoLightbox.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeLightbox() {
+      if (!photoLightbox) return;
+      photoLightbox.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        closeModal();
+      }
+    });
+
+
+    /* ===================================================
+       7. SMOOTH FLOATING HEARTS & SPARKLES BACKGROUND
+       =================================================== */
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const PARTICLE_COUNT = 38;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class FloatingHeart {
+      constructor() {
+        this.reset(true);
+      }
+
+      reset(initial = false) {
+        this.x = Math.random() * canvas.width;
+        this.y = initial ? Math.random() * canvas.height : canvas.height + 20;
+        this.size = Math.random() * 14 + 10;
+        this.speedY = Math.random() * 0.7 + 0.35;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.4 + 0.15;
+        this.sway = Math.random() * Math.PI * 2;
+        this.swaySpeed = Math.random() * 0.02 + 0.01;
+        this.isSparkle = Math.random() > 0.65;
+        this.color = Math.random() > 0.5 ? '#ec4899' : '#f43f5e';
+      }
+
+      update() {
+        this.y -= this.speedY;
+        this.sway += this.swaySpeed;
+        this.x += Math.sin(this.sway) * 0.5 + this.speedX;
+
+        if (this.y < -30 || this.x < -30 || this.x > canvas.width + 30) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+
+        if (this.isSparkle) {
+          // Draw Sparkle Star
+          ctx.fillStyle = '#fbbf24';
+          ctx.beginPath();
+          const cx = this.x;
+          const cy = this.y;
+          const spikes = 4;
+          const outerR = this.size * 0.6;
+          const innerR = outerR * 0.3;
+          let rot = Math.PI / 2 * 3;
+          const step = Math.PI / spikes;
+
+          ctx.moveTo(cx, cy - outerR);
+          for (let i = 0; i < spikes; i++) {
+            let x = cx + Math.cos(rot) * outerR;
+            let y = cy + Math.sin(rot) * outerR;
+            ctx.lineTo(x, y);
+            rot += step;
+            x = cx + Math.cos(rot) * innerR;
+            y = cy + Math.sin(rot) * innerR;
+            ctx.lineTo(x, y);
+            rot += step;
+          }
+          ctx.lineTo(cx, cy - outerR);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // Draw Smooth Heart Shape
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          const topCurveHeight = this.size * 0.3;
+          ctx.moveTo(this.x, this.y + topCurveHeight);
+          ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+          ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 1.4, this.x, this.y + this.size);
+          ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 1.4, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+          ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new FloatingHeart());
+    }
+
+    function animateBackground() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of particles) {
+        p.update();
+        p.draw();
+      }
+      requestAnimationFrame(animateBackground);
+    }
+    requestAnimationFrame(animateBackground);
+  </script>
+</body>
+</html>
